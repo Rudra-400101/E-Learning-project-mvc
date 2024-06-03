@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Admin Panel</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/assets/img/favicon.svg">
+
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/Content/assets/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/feather/feather.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/slick/slick.css">
+    <link rel="stylesheet" href="~/Content/assets/plugins/slick/slick-theme.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/select2/css/select2.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/swiper/css/swiper.min.css">
+
+    <link rel="stylesheet" href="~/Content/assets/plugins/aos/aos.css">
+
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <style>
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            background-color: #F5F5F5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #F90;
+            background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%, transparent 75%, transparent)
+        }
+    </style>
+</head>
+<body class="home-two">
+
+    <div class="main-wrapper">
+
+        <header class="header position-sticky top-0 header-two" style="z-index:10">
+            <div>
+                <nav class="navbar navbar-expand-lg header-nav scroll-sticky">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a id="mobile_btn" href="javascript:void(0);">
+                                <span class="bar-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </a>
+                            <a href="/home/index" class="navbar-brand logo">
+                                <img src="~/Content/assets/img/study-logo.png" style="height:60px;" class="img-fluid" alt="logo">
+                            </a>
+                        </div>
+                        <div class="main-menu-wrapper">
+                            <div class="menu-header">
+                                <a href="/home/index" class="menu-logo">
+                                    <img src="~/Content/assets/img/study-logo.png" style="height:60px;" class="img-fluid" alt="logo" />
+                                </a>
+                                <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <ul class="main-nav nav">
+                                <li class="has-submenu menu-effect dashmenu">
+                                    <a href="/admin/dashboard">Dashboard</a>
+                                </li>
+                                <li class="has-submenu menu-effect">
+                                    <a class="addDetail">Add Details <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li class="addcatmenu"><a href="/admin/addCourseCategory">Add Courses Category</a></li>
+                                        <li class="addcoursemenu"><a href="/admin/addCourse">Add Courses</a></li>
+                                        <li class="addinstmenu"><a href="/admin/AddInstructor">Add Instructor</a></li>
+                                        <li class="addlecturemenu"><a href="/admin/AddVideo">Add Lecture</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="has-submenu menu-effect">
+                                    <a class="management">Management <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li class="mngcategorymenu"><a href="/admin/categoryManagement">Course Category Management</a></li>
+                                        <li class="mngcoursemenu"><a href="/admin/courseManagement">Course Management</a></li>
+                                        <li class="mnglecturemenu"><a href="/admin/VideoManagement">Video Lecture Management</a></li>
+                                        <li class="mnginstmenu"><a href="/admin/instructorManagement">Instructor Management</a></li>
+                                        <li class="mngregistermenu"><a href="/admin/RegisterManagement">Registeration Management</a></li>
+                                        <li class="mngfeedmenu"><a href="/admin/feedbackmanagement">Feedback Management</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-submenu menu-effect">
+                                    <a class="enrollment">Enrollment <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li class="checkoffermenu"><a href="/admin/checkOffers">Check Offers</a></li>
+                                        <li class="checkenrollmenu"><a href="/admin/Enrollmentmanagment">Check Enrollment</a></li>
+                                        <li class="offermanagemenu"><a href="/admin/OfferManagement">Offer Management</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="login-link">
+                                    <a href="login.html">Login / Signup</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav header-navbar-rht">
+                            <li class="nav-item">
+                                <a class="signin-head " href="/admin/Logout">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <div>
+            @RenderBody()
+        </div>
+        <footer class="footer footer-two aos" data-aos="fade-up">
+
+            <div class="footer-bottom">
+                <div class="container">
+
+                    <div class="copyright">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="copyright-text">
+                                    <p class="mb-0">&copy; 2024 All rights reserved.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="privacy-policy">
+                                    <ul>
+                                        <li><a href="term-condition.html">Terms & Condition</a></li>
+                                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                                        <li><a href="support.html">Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </footer>
+
+    </div>
+    @*<script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>*@
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <link href="~/Content/datatables/datatables.css" rel="stylesheet" />
+
+    <script src="~/Content/datatables/datatables.js"></script>
+
+    <script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+
+    <script src="~/Content/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/Content/assets/js/owl.carousel.min.js"></script>
+
+    <script src="~/Content/assets/plugins/aos/aos.js"></script>
+
+    <script src="~/Content/assets/js/jquery.waypoints.js"></script>
+    <script src="~/Content/assets/js/jquery.counterup.min.js"></script>
+
+    <script src="~/Content/assets/plugins/select2/js/select2.min.js"></script>
+
+    <script src="~/Content/assets/plugins/slick/slick.js"></script>
+
+    <script src="~/Content/assets/plugins/swiper/js/swiper.min.js"></script>
+
+    <script src="~/Content/assets/js/script.js"></script>
+
+    <script>
+        new DataTable('#myTable');
+    </script>
+</body>
+</html>

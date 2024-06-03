@@ -1,0 +1,442 @@
+﻿
+@{
+    ViewBag.Title = "CourseDetail";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+<style>
+    #showOrHideSuccessAlert {
+        display: none;
+        z-index: 10;
+    }
+</style>
+
+@*show alert*@
+<div class="alert alert-success alert-dismissible fw-bold top-0 w-100 p-3 position-fixed" id="showOrHideSuccessAlert" role="alert">
+    <i class="fa-solid fa-circle-check fs-3"></i> <span id="successAlert" class="fs-5"></span>
+</div>
+
+<div class="inner-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="instructor-wrap border-bottom-0 m-0">
+                    <div class="about-instructor align-items-center">
+                        <div class="abt-instructor-img">
+                            <a href="instructor-profile.html"><img src="~/Content/instructorPic/@Model.Tables[0].Rows[0]["profilePic"]" alt="img" class="img-fluid"></a>
+                        </div>
+                        <div class="instructor-detail me-3">
+                            <h5><a href="instructor-profile.html">@Model.Tables[0].Rows[0]["name"]</a></h5>
+                            <p>@Model.Tables[0].Rows[0]["cname"]</p>
+
+                        </div>
+
+                    </div>
+                </div>
+                <h5>@Model.Tables[0].Rows[0]["aboutme"]</h5>
+                <p>@Model.Tables[0].Rows[0]["profilesummary"]</p>
+                <div class="course-info d-flex align-items-center border-bottom-0 m-0 p-0">
+                    <div class="cou-info">
+                        <img src="~/Content/assets/img/icon/icon-01.svg">
+                        <p>@Model.Tables[0].Rows[0]["qualification"]</p>
+                    </div>
+                    <div class="cou-info">
+                        <img src="~/Content/assets/img/icon/user-icon.svg">
+                        <p>@Model.Tables[0].Rows[0]["gender"]</p>
+                    </div>
+                    <div class="cou-info">
+                        <img src="~/Content/assets/img/icon/people.svg">
+                        <p>@Model.Tables[3].Rows[0]["totalenroll"]  students enrolled</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section class="page-content course-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div class="card overview-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">Overview</h5>
+                        <h6>Course Description</h6>
+                        <p id="courseDescription">@Html.Raw(Model.Tables[0].Rows[0]["details"])</p>
+
+
+                    </div>
+                </div>
+
+
+                <div class="card content-sec">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5 class="subs-title">Course Content</h5>
+                            </div>
+                            <div class="col-sm-6 text-sm-end">
+                                <h6 id="allContentDetail"></h6>
+                            </div>
+                        </div>
+                        @if (Model != null)
+                        {
+                            if (Model.Tables[2].Rows.Count > 0)
+                            {
+                                foreach (System.Data.DataRow dt in Model.Tables[2].Rows)
+                                {
+
+                                    <div class="course-card">
+                                        <h6 class="cou-title" onclick="selectVideoChapterWise(@dt["id"],'@dt["chapter"]')">
+                                            <a class="collapsed" data-bs-toggle="collapse" href="#collapse_@dt["id"]" aria-expanded="false">@dt["chapter"]</a>
+                                        </h6>
+                                        <div id="collapse_@dt["id"]" class="card-collapse collapse">
+                                            <ul id="video_@dt["id"]"></ul>
+                                        </div>
+                                    </div>
+
+                                }
+    }
+    else
+                {
+                    <h6 class="text-secondary text-center">Video not Found!</h6>
+                }
+                        }
+                    </div>
+                </div>
+
+
+                <div class="card instructor-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">About the instructor</h5>
+                        <div class="instructor-wrap">
+                            <div class="about-instructor">
+                                <div class="abt-instructor-img">
+                                    <a href="instructor-profile.html"><img src="~/Content/instructorPic/@Model.Tables[0].Rows[0]["profilePic"]" alt="img" class="img-fluid"></a>
+                                </div>
+                                <div class="instructor-detail">
+                                    <h5><a href="instructor-profile.html">@Model.Tables[0].Rows[0]["name"]</a></h5>
+                                    <p>@Model.Tables[0].Rows[0]["cname"]</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-info d-flex align-items-center">
+                            <div class="cou-info">
+                                <img src="~/Content/assets/img/icon/chapter.svg" alt>
+                                <p>@Model.Tables[0].Rows[0]["totalcourse"] Courses</p>
+                            </div>
+                            <div class="cou-info">
+                                <img src="~/Content/assets/img/icon/icon-02.svg" alt>
+                                <p>
+                                    @{  string hour="00:00";
+                                        if (!Model.Tables[0].Rows[0]["course"].Equals(DBNull.Value)) {
+                                    TimeSpan time = TimeSpan.FromMinutes(Convert.ToDouble(Model.Tables[0].Rows[0]["totalduration"]));
+                                        hour = time.ToString(@"hh\:mm");
+                                        @hour@:min
+}
+                                        else
+                                        {
+                @:00:00
+            }
+                                        }
+                                </p>
+                            </div>
+                            <div class="cou-info">
+                                <img src="~/Contetn/assets/img/icon/people.svg" alt>
+                                <p>@Model.Tables[3].Rows[0]["totalenroll"]  students enrolled</p>
+                            </div>
+                        </div>
+                        <p>@Model.Tables[0].Rows[0]["aboutme"]</p>
+                        <p>@Model.Tables[0].Rows[0]["profilesummary"]</p>
+                        <p>Available for:</p>
+                        <ul>
+                            <li>1. Full Time Office Work</li>
+                            <li>2. Remote Work</li>
+                            <li>3. Freelance</li>
+                            <li>4. Contract</li>
+                            <li>5. Worldwide</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="card review-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">Reviews</h5>
+                        <div class="instructor-wrap">
+                            <div class="about-instructor">
+                                <div class="abt-instructor-img">
+                                    <a href="instructor-profile.html"><img src="~/Content/instructorPic/@Model.Tables[0].Rows[0]["profilePic"]" alt="img" class="img-fluid"></a>
+                                </div>
+                                <div class="instructor-detail">
+                                    <h5><a href="instructor-profile.html">@Model.Tables[0].Rows[0]["name"]</a></h5>
+                                    <p>@Model.Tables[0].Rows[0]["cname"]</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        @{if (Model != null)
+                            {
+                                if (Model.Tables[1].Rows.Count > 0)
+                                {
+                                    foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+                                    {
+                                        <p class="rev-info">
+                                            <h4>@dt["fullname"]</h4>
+                                            <b>@dt["subject"]</b>
+                                        <p>@dt["comment"]</p>
+                                        </p>
+                                        <a href="javascript:;" class="btn btn-reply"><i class="feather-corner-up-left"></i> Reply</a>
+                                        <hr />
+                                    }
+                                }
+                                else
+                                {
+                                    <h5 class="text-center text-secondary">Not Comment Yet..</h5>
+                                }
+                            }
+
+
+}
+                    </div>
+                </div>
+
+                @if (User.IsInRole("student"))
+                {
+                <div class="card comment-sec">
+                    <div class="card-body">
+                        <h5 class="subs-title">Post A comment</h5>
+                        <form id="form" method="post">
+                            <div class="row">
+                                <input type="number" value="@Model.Tables[0].Rows[0]["courseId"]" name="courseId" hidden />
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" id="fname" class="form-control" name="fname" placeholder="Full Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" id="email" readonly value="@User.Identity.Name" name="email" class="form-control" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+<textarea rows="4" class="form-control" name="comment" id="comment" placeholder="Your Comments"></textarea>
+                            </div>
+                            <div class="submit-section">
+                                <button class="btn submit-btn" onclick="feedback()" id="btn" type="button">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar-sec">
+
+                    <div class="video-sec vid-bg">
+                        <div class="card">
+                            <div class="card-body">
+                    <img class="img-thumbnail" style="max-height:200px;" src="~/Content/coursePic/@Model.Tables[0].Rows[0]["thumbnail"]" />
+                                <div class="video-details">
+                                    <div class="course-fee">
+                                        @{
+                                            double total = Convert.ToDouble(Model.Tables[0].Rows[0]["fees"]);
+                                            double discount = Convert.ToDouble(Model.Tables[0].Rows[0]["discount"]);
+                                            double percentage = (discount / total) * 100;
+                                            double sum = (total - discount);
+                                        }
+                                        <h2>Rs @sum</h2>
+                                        <p>
+                                            <span>Rs @Model.Tables[0].Rows[0]["fees"]</span>
+
+                                            @percentage.ToString("0.00")% off
+                                        </p>
+                                    </div>
+                                    <div class="row gx-2">
+                                        <div class="col-6"></div>
+                                        <div class="col-md-6">
+                                            <a onclick="share()" class="btn btn-wish w-100"><i class="feather-share-2"></i> Share</a>
+                                        </div>
+                                    </div>
+                                    <a href="/home/invoice?course_id=@Request.QueryString["course_id"]" class="btn btn-enroll w-100">Enroll Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card include-sec">
+                        <div class="card-body">
+                            <div class="cat-title">
+                                <h4>Includes</h4>
+                            </div>
+                            <ul>
+                                <li><img src="~/Content/assets/img/icon/import.svg" class="me-2" alt> 11 hours on-demand video</li>
+                                <li><img src="~/Content/assets/img/icon/play.svg" class="me-2" alt> 69 downloadable resources</li>
+                                <li><img src="~/Content/assets/img/icon/key.svg" class="me-2" alt> Full lifetime access</li>
+                                <li><img src="~/Content/assets/img/icon/mobile.svg" class="me-2" alt> Access on mobile and TV</li>
+                                <li><img src="~/Content/assets/img/icon/cloud.svg" class="me-2" alt> Assignments</li>
+                                <li><img src="~/Content/assets/img/icon/teacher.svg" class="me-2" alt> Certificate of Completion</li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="card feature-sec">
+                        <div class="card-body">
+                            <div class="cat-title">
+                                <h4>Includes</h4>
+                            </div>
+                            <ul>
+                                <li><img src="~/Content/assets/img/icon/users.svg" class="me-2" > Enrolled: <span>@Model.Tables[3].Rows[0]["totalenroll"] students</span></li>
+                                <li><img src="~/Content/assets/img/icon/timer.svg" class="me-2" > Duration: <span>
+   
+        @hour min
+</span></li>
+                                <li><img src="~/Content/assets/img/icon/chapter.svg" class="me-2" > Courses: <span>@Model.Tables[0].Rows[0]["totalCourse"] Courses </span></li>
+                                <li><img src="~/Content/assets/img/icon/chart.svg" class="me-2" > Level: <span>Beginner</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    //get user feddback on a particular courses and add it in database
+    const feedback = () => {
+        if ($("#fname").val()!="" && $("#email").val()!="" && $("#subject").val()!="" && $("#comment").val()!="") {
+        let obj = new FormData();
+        let data = $("#form").serializeArray();
+        data.forEach(function (e) {
+            obj.append(e.name, e.value);
+        })
+            $.ajax({
+                url: "/home/feedback",
+                type: "post",
+                data: obj,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    document.getElementById("form").reset();
+                    //show success alert
+                    document.getElementById("showOrHideSuccessAlert").style.display = "block";
+                    $("#successAlert").text(res);
+                    setTimeout(() => {
+                        document.getElementById("showOrHideSuccessAlert").style.display = "none";
+
+                    }, 2000)
+                },
+                error: function () {
+                    alert("error While Adding Data")
+                }
+            })
+        } else {
+            //show fields are required alert
+            document.getElementById("showOrHideSuccessAlert").style.display = "block";
+            $("#showOrHideSuccessAlert").html('<i class="fa-solid fs-3 fa-circle-exclamation"></i> ' + "&nbsp; All Fields Are Required");
+            $("#showOrHideSuccessAlert").addClass("alert-danger")
+            setTimeout(() => {
+                document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                $("#showOrHideSuccessAlert").removeClass("alert-danger")
+            }, 2000)
+        }
+    }
+
+    //select chapter wise and bind according to chapter  ----------------
+    function selectVideoChapterWise(id,chapter) {
+
+        $.ajax({
+            url: "/home/selectVideoChapterWise",
+            type: "post",
+            data: { chapter: chapter,id:@Request.QueryString["course_id"] },
+            success: function (res) {
+                $("#video_" + id).empty();
+                res.forEach(function (e, i) {
+                    $("#video_" + id).append(`
+    <li>
+    <p><img src="/Content/assets/img/icon/play.svg" class="me-2">Lecture ${i + 1}: ${e.coursetitle} </p>
+    <div>
+      <a href="#" ${e.ispaid ? '' : 'data-bs-toggle= "modal" data-bs-target="#exampleModal"'} onclick='setImage("${e.video}","${e.coursetitle}")' >${e.ispaid ? 'Paid' : 'Preview'}</a>
+        <span>${convertMinutesToHours(e.duration)}</span>
+    </div>
+</li>
+               `)
+                    $("#allContentDetail").text(`${e.totalcourse} Lecture ${convertMinutesToHours(e.totalduration)}`)
+                   
+
+                })
+            },
+            error: function () {
+                alert("Error While Fetching Data")
+            }
+        })
+    }
+
+    //set video or title in iframe to show in modal---------------------------------------
+
+    function setImage(video, title) {
+        $("#exampleModalLabel").text(title)
+        $("#iframeVideo").attr("src", video + "?showinfo=0")
+    }
+
+    //Calculate time-----------------------------------------------------------------------
+
+    function convertMinutesToHours(minutes) {
+        // Calculate hours
+        var hours = Math.floor(minutes / 60);
+
+        // Calculate remaining minutes
+        var remainingMinutes = minutes % 60;
+
+        return hours + " hours " + remainingMinutes + " minutes";
+    }
+
+    //Share Links ---------------------------
+    function share() {
+        let url = window.location.href;
+        let title = window.document.title;
+        let description = $("#courseDescription").text();
+        let image = "/Content/coursePic/@Model.Tables[0].Rows[0]["thumbnail"]";
+
+        try {
+            navigator.share({
+                file: [image],
+                title: title,
+                text: description,
+                url: url,
+
+            })
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <center> <iframe src="" class="w-100"  style="height:400px;" id="iframeVideo" allowfullscreen></iframe></center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+﻿
+@{
+    ViewBag.Title = "InstrutorDetails";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+@model System.Data.DataSet
+<style>
+    .instructormenu {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+
+    .hover {
+        transition: .4s;
+    }
+
+        .hover:hover {
+            transform: scale(1.01);
+        }
+</style>
+@if (Model != null)
+{
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-xl-3 col-md-4">
+                    <div class="settings-widget dash-profile mb-3">
+                        <div class="settings-menu p-0">
+                            <div class="profile-bg">
+                                <h5>Instructor</h5>
+                                <img src="~/Content/assets/img/profile-bg.jpg">
+                                <div class="profile-img">
+                                    <img src="~/Content/instructorPic/@Model.Tables[0].Rows[0]["profilepic"]" />
+                                </div>
+                            </div>
+                            <div class="profile-group">
+                                <div class="profile-name text-center">
+                                    <h4>@Model.Tables[0].Rows[0]["name"] <small class="text-secondary">(@Model.Tables[0].Rows[0]["gender"])</small></h4>
+                                    <p>@Model.Tables[0].Rows[0]["qualification"]</p>
+                                </div>
+                                <div class="go-dashboard text-start">
+                                    <small>@Model.Tables[0].Rows[0]["profileSummary"]</small>.<br />
+                                    <small>@Model.Tables[0].Rows[0]["aboutMe"]</small>.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-widget account-settings">
+                        <div class="settings-menu overflow-auto" style="max-height:80vh;">
+                            <h3>Courses And Videos</h3>
+                            <h6 id="notFound" class="text-secondary">Video Not Found!</h6>
+                            <p id="allContentDetail"></p>
+                            @if (Model != null)
+                            {
+                                if (Model.Tables[0].Rows.Count > 0)
+                                {
+
+                                    foreach (System.Data.DataRow dt in Model.Tables[0].Rows)
+                                    {
+                                        if (!dt["chapter"].Equals(DBNull.Value))
+                                        {
+                                            <div class="course-card">
+                                                <h6 class="cou-title" onclick="selectVideoChapterWise(@dt["id"],'@dt["chapter"]',@dt["courseid"])">
+                                                    <a class="collapsed" data-bs-toggle="collapse" href="#collapse_@dt["id"]" aria-expanded="false">@dt["chapter"]</a>
+                                                </h6>
+                                                <div id="collapse_@dt["id"]" class="card-collapse collapse">
+                                                    <ul id="video_@dt["id"]"></ul>
+                                                </div>
+                                            </div>
+                                            <script>document.getElementById("notFound").innerText = ""</script>
+                                        }
+
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-9 col-md-8">
+                    <div class="settings-widget profile-details">
+                        <div class="settings-menu p-0">
+                            <div class="checkout-form personal-address add-course-info ">
+                                <div class="personal-info-head mb-4 overflow-auto " style="max-height:100vh;">
+                                    <h4>Instructors</h4>
+                                    <p>See All Instructors And Find Best Instructors For you!</p>
+                                </div>
+                                @if (Model != null)
+                                {
+                                    if (Model.Tables[1].Rows.Count > 0)
+                                    {
+                                        foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+                                        {
+                                            <div class="row shadow-sm p-2 rounded hover">
+                                                <div class="col-sm-12">
+                                                    <a href="/home/instrutorDetails?instId=@dt["instructorId"]">
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <img height="50" width="50" class="rounded-circle" src="~/Content/instructorPic/@dt["profilepic"]" />
+                                                            </div>
+                                                            <div class="col-sm-3 d-flex flex-wrap px-4 py-2" style="box-sizing:border-box;">
+                                                                <h6>@dt["name"]</h6>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <p>@dt["qualification"]</p>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <small class="text-secondary">@dt["aboutMe"]</small>
+
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3 class="text-secondary text-center">Instructor Not Add Yet!</h3>
+}
+<script>
+    //select chapter wise and bind according to chapter  ----------------
+    function selectVideoChapterWise(id, chapter, courseid) {
+
+        $.ajax({
+            url: "/home/selectVideoChapterWise",
+            type: "post",
+            data: { chapter: chapter, id: courseid },
+            success: function (res) {
+                if (res.length > 0) {
+                    $("#video_" + id).empty();
+                    res.forEach(function (e, i) {
+                        $("#video_" + id).append(`
+    <li>
+    <p><img src="/Content/assets/img/icon/play.svg" class="me-2">${i + 1}: ${e.coursetitle} </p>
+      <a ${e.ispaid ? `href="/home/courseDetail?course_id=${e.id}"` : 'data-bs-toggle= "modal" data-bs-target="#exampleModal"'} onclick='setImage("${e.video}","${e.coursetitle}")' class='text-decoration-underline' style='cursor:pointer;'>${e.ispaid ? 'Paid' : 'Preview'}
+        <span>${convertMinutesToHours(e.duration)}</span>
+      </a>
+
+</li>
+               `)
+                        $("#allContentDetail").text(`${e.totalcourse} Lecture ${convertMinutesToHours(e.totalduration)}`)
+
+
+                    })
+                }
+            },
+            error: function () {
+                alert("Error While Fetching Data")
+            }
+        })
+    }
+
+    //set video or title in iframe to show in modal---------------------------------------
+
+    function setImage(video, title) {
+        $("#exampleModalLabel").text(title)
+        $("#iframeVideo").attr("src", video + "?showinfo=0")
+    }
+    //Calculate time-----------------------------------------------------------------------
+
+    function convertMinutesToHours(minutes) {
+        // Calculate hours
+        var hours = Math.floor(minutes / 60);
+
+        // Calculate remaining minutes
+        var remainingMinutes = minutes % 60;
+
+        return hours + "h :" + remainingMinutes +"m";
+    }
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <center> <iframe src="" class="w-100" style="height:400px;" id="iframeVideo" allowfullscreen></iframe></center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

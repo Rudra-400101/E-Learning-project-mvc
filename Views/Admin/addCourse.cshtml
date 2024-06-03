@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "addCourse";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .addcoursemenu a, .addDetail {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<div class="row mt-5">
+    <div class=" col-md-5 border mx-auto shadow w-75">
+        <form id="formData" enctype="multipart/form-data" method="post" action="/admin/addCourse">
+            <div class="text-center fw-bold fs-3 text-secondary">
+                <span>ADD</span> <span class="text-danger">Course</span>
+            </div>
+            <div class="add-course-form mt-2">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="add-course-label">Course Title</label>
+                            <input name="title" id="title" type="text" class="form-control" placeholder="Enter course Title">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="add-course-label">Course Thumbnail</label>
+                        <input name="cthumbnail" id="cthumbnail" type="file" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <lable>
+                                Select Category<br />
+                                <select class="form-select" name="ccategory" id="ccategory">
+                                    <option selected disabled>---Select Course Category---</option>
+
+                                    @if (Model != null)
+                                    {
+                                        foreach (System.Data.DataRow dt in Model.Tables[0].Rows)
+                                        {
+                                            <option value="@dt[0]">@dt[1]</option>
+                                        }
+                                    }
+                                </select>
+                            </lable>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <lable>
+                                Select Instructor<br />
+                                <select class="form-select" name="cinstructor" id="cinstructor">
+                                    <option selected disabled>---Select Instructor---</option>
+                                    @if (Model != null)
+                                    {
+                                        foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+                                        {
+                                            <option value="@dt[0]">@dt[1]</option>
+                                        }
+                                    }
+                                </select>
+                            </lable>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="add-course-label">Course Fees</label>
+                            <input name="cfees" id="cfees" type="number" class="form-control" placeholder="Enter Your Course Fees">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="add-course-label">Course Discount</label>
+                            <input name="cdiscount" id="cdiscount" type="number" placeholder="Enter Your Course Discount" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Course Duration</label>
+                    <input name="cduration" id="cduration" type="date" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Course Details</label>
+                    <textarea rows="4" id="Details" name="editor"></textarea>
+                </div>
+                <div class="form-group mt-2">
+                    <input type="submit" value="Add Course" class="form-control border btn btn-danger text-light fw-bold" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/content/ckeditor.js"></script>
+    <script>
+        ClassicEditor.create(document.querySelector("#Details"))  //set ckeditor
+    </script>
+
+

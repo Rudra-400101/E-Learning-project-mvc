@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "myCourse";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .myCoursemenu a, .profile {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-3 overflow-auto">
+        @if (Model != null)
+        {
+            if (Model.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow dt in Model.Rows)
+                {
+
+                    <div class="course-card">
+                        <h6 class="cou-title" onclick="selectVideoChapterWise(@dt["course"],'@dt["chapter"]',@dt["id1"])">
+                            <a class="collapsed" data-bs-toggle="collapse" href="#collapse_@dt["id1"]" aria-expanded="false">@dt["chapter"]</a>
+                        </h6>
+                        <div id="collapse_@dt["id1"]" class="card-collapse collapse">
+                            <ul id="video_@dt["id1"]"></ul>
+                        </div>
+                    </div>
+
+                }
+            }
+        }
+    </div>
+    <div class="col-sm-9 position-relative">
+        <div class="row">
+            @if (Model != null)
+            {
+                if (Model.Rows.Count > 0)
+                {
+                    foreach (System.Data.DataRow dt in Model.Rows)
+                    {
+                        <div class="col-sm-12 col-md-12 d-flex">
+                            <div class="course-box course-design list-course d-flex">
+                                <div class="product">
+                                    <div class="product-img">
+                                        <a href="/home/courseDetail?course_id=@dt["courseId"]">
+                                            <img class="img-fluid" src="~/Content/coursePic/@dt["thumbnail"]">
+                                        </a>
+                                       
+                                    </div>
+                                    <div class="product-content">
+                                        <div class="head-course-title">
+                                            <h3 class="title"><a href="/home/courseDetail?course_id=@dt["courseId"]">@dt["title"]</a></h3>
+                                        </div>
+                                        <small class="text-secondary">@dt["cname"]</small> &nbsp;&nbsp;&nbsp;
+                                        <small class="text-decoration-underline text-green">@dt["name"]</small> &nbsp;&nbsp;&nbsp;
+                                        <small class="text-secondary">@dt["qualification"]</small>
+
+                                        <div class="course-info d-flex align-items-center border-bottom-0 pb-0">
+                                            <div class="rating-img d-flex align-items-center">
+                                                <img src="~/Content/assets/img/icon/icon-22.svg">
+                                                <p><b>Expiry :</b> <span id="validDate_@dt["id"]">@Convert.ToDateTime(dt["entrollDate"]).AddDays(28).ToString("dd-MM-yyyy")</span></p>
+                                            </div>
+
+                                            @*Remove Expired Course*@
+                                            <script>
+                                                var date = new Date();
+                                                var currentDate=date.getDate()
+                                                var validdate = document.getElementById("validDate_@dt["id"]").innerText.slice(0, 2)
+
+                                                if (validdate == currentDate) {
+                                                    location.href = '/home/removeEnroll?enrollId=@dt["id"]'
+                                                }
+                                            </script>
+
+                                            <div class="course-view d-flex align-items-center">
+                                                <img src="~/Content/assets/img/icon/icon-02.svg">
+                                                <p>
+                                                    @{TimeSpan time = TimeSpan.FromMinutes(Convert.ToDouble(dt["duration1"]));
+                                                        string hour = time.ToString(@"hh\:mm");
+                                                        @hour
+
+                                                    } min
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p><b>Enroll Date :</b><span class="enrollDate"> @dt["entrollDate"]</span></p>
+                                           
+                                            <p><b>Chapter :</b> @dt["chapter"]</p>
+                                        </div>
+                                        <div>
+                                            <p>@Html.Raw(dt["details"])</p>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <h3 class="text-secondary my-5">Course Not Found Please Add Courses First...</h3>
+                }
+            }
+        </div>
+        <div class="w-100 vh-100 position-absolute top-0 p-1 bg-light" id="videoBox" style="z-index:10;left:100%;box-sizing:border-box;transition:.5s;">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" id="closeBtn"></button>
+            </div>
+            <div class="modal-body">
+                <center> <iframe src="" class="w-100" style="height:400px;" id="iframeVideo" allowfullscreen></iframe></center>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    //get video for enrolled user and bind according to chapter wise
+    function selectVideoChapterWise(id, chapter, vid) {
+
+        $.ajax({
+            url: "/home/selectVideoChapterWise",
+            type: "post",
+            data: { chapter: chapter, id: id },
+            success: function (res) {
+                $("#video_" + vid).empty();
+                res.forEach(function (e, i) {
+                    $("#video_" + vid).append(`
+    <li>
+    <p onclick='setImage("${e.video}","${e.coursetitle}")' style='cursor:pointer;'><img height='30' width='30' src="/Content/coursePic/${e.pic}" class="radius-circle" >Lecture ${i + 1}: ${e.coursetitle} </p>
+    <div>
+        <span>${convertMinutesToHours(e.duration)}</span>
+    </div>
+</li>
+               `)
+                    $("#allContentDetail").text(`${e.totalcourse} Lecture ${convertMinutesToHours(e.totalduration)}`)
+
+
+                })
+            },
+            error: function () {
+                alert("Error While Fetching Data")
+            }
+        })
+    }
+
+    //set video or title in iframe to show in modal---------------------------------------
+
+    function setImage(video, title) {
+        $("#videoBox").css({ left: 0 })
+        $("#exampleModalLabel").text(title)
+        $("#iframeVideo").attr("src", video + "?showinfo=0")
+    }
+
+    //Calculate time-----------------------------------------------------------------------
+
+    function convertMinutesToHours(minutes) {
+        // Calculate hours
+        var hours = Math.floor(minutes / 60);
+
+        // Calculate remaining minutes
+        var remainingMinutes = minutes % 60;
+
+        return hours + "h :" + remainingMinutes + "m";
+    } 
+    document.getElementById("closeBtn").addEventListener("click", function () {
+        $("#videoBox").css({ left: "100%" });
+    })
+
+</script>

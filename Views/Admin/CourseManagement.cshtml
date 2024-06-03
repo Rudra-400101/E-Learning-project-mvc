@@ -1,0 +1,233 @@
+﻿
+@{
+    ViewBag.Title = "CourseManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@*@model System.Data.DataSet*@
+
+
+<style>
+    .mngcoursemenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Course</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-1">
+                    <div class=" col-md-5 border mx-auto shadow w-100">
+                        <form id="formData" enctype="multipart/form-data" method="post" action="/admin/updateCourse">
+                            <input type="number" name="id" id="id" hidden />
+                            <input type="text" name="thumbnail" id="oldpic" hidden />
+                            <div class="text-center fw-bold fs-3 text-secondary">
+                            </div>
+                            <div class="add-course-form mt-2">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="add-course-label">Course Title</label>
+                                            <input name="title" id="title" type="text" class="form-control" placeholder="Enter course Title">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="add-course-label">Course Thumbnail</label>
+                                        <input name="cthumbnail" id="cthumbnail" type="file" class="form-control" />
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <lable>
+                                                Select Category<br />
+                                                <select class="form-select" name="ccategory" id="ccategory">
+                                                    <option selected disabled>---Select Course Category---</option>
+                                                    @if (Model != null)
+                                                    {
+                                                        foreach (System.Data.DataRow dt in Model.Tables[0].Rows)
+                                                        {
+                                                            <option class="selectCategory" value="@dt[0]">@dt[1]</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </lable>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <lable>
+                                                Select Instructor<br />
+                                                <select class="form-select" name="cinstructor" id="cinstructor">
+                                                    <option selected disabled>---Select Instructor---</option>
+                                                    @if (Model != null)
+                                                    {
+                                                        foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+                                                        {
+                                                            <option class="selectInstructor" value="@dt[0]">@dt[1]</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </lable>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="add-course-label">Course Fees</label>
+                                            <input name="cfees" id="cfees" type="number" class="form-control" placeholder="Enter Your Course Fees">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="add-course-label">Course Discount</label>
+                                            <input name="cdiscount" id="cdiscount" type="number" placeholder="Enter Your Course Discount" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="add-course-label">Course Duration</label>
+                                    <input name="cduration" id="cduration" type="date" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="add-course-label">Course Details</label>
+                                    <textarea rows="4" id="details" name="editor"></textarea>
+                                </div>
+                                <div class="form-group mt-2">
+                                    <input type="submit" value="Update Course" class="form-control border btn btn-danger text-light fw-bold" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    if (Model.Tables[2].Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Courses </b> &nbsp;&nbsp;<span class="border shadow-sm rounded py-2 px-3 text-danger fw-bold">@Model.Tables[2].Rows.Count</span></p>
+
+        <table class="table table-bordered" id="myTable">
+            <thead>
+                <tr>
+                    <th>Sr</th>
+                    <th>Title</th>
+                    <th>Instructor</th>
+                    <th>Category</th>
+                    <th>Fees</th>
+                    <th>Discount</th>
+                    <th>Duration</th>
+                    <th>Thumbnail</th>
+                    <th>Details</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    foreach (System.Data.DataRow dt in Model.Tables[2].Rows)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td id="title_@dt[0]">@dt["title"]</td>
+                            <td id="name_@dt[0]">@dt["name"]</td>
+                            <td id="cname_@dt[0]">@dt["cname"]</td>
+                            <td id="fees_@dt[0]">@dt["fees"]</td>
+                            <td id="discount_@dt[0]">@dt["discount"]</td>
+                            <td id="duration_@dt[0]">@Convert.ToDateTime(dt["duration"]).ToString("yyyy-MM-dd")</td>
+                            <td><img id="pic_@dt[0]" src="~/Content/coursePic/@dt["thumbnail"]" height="50" /></td>
+                            <td id="details_@dt[0]">@Html.Raw(dt["details"])</td>
+                            <td>
+                                <a href="/admin/CourseManagement?id=@dt["courseId"]&pic=@dt["thumbnail"]" class="btn btn-danger" onclick="return confirm('Do You Really Want To Delete?')"><i class="fa-solid fa-trash"></i></a>
+                                <button type="button" class="btn btn-primary" onclick="editCourse(@dt[0],'@dt["thumbnail"]',@dt["id"],@dt["instructorId"])" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                @if (Convert.ToInt32(dt["status"]) == 1)
+                                {
+                                    <a href="/admin/courseManagement?status=@dt[0]" title="Active Category" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/admin/courseManagement?status=@dt[0]" title="Deactive Category" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        <h2 class="text-center text-secondary my-3">Please Add Courses....</h2>
+    }
+}
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script src="~/Content/ckeditor.js"></script>
+<script>
+    let editor; //for hold ckeditor
+    //create ckeditor for textarea
+    ClassicEditor
+        .create(document.querySelector('#details'))
+        .then(newEditor => {
+            editor = newEditor; //after succesfully create ckeditor hold on editor variable
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        //get course data and set it in modal for edit
+    function editCourse(e, thumb, courseId, instructorId) {
+        let title = $("#title_" + e).text()
+        let fees = $("#fees_" + e).text()
+        let discount = $("#discount_" + e).text()
+        let duration = $("#duration_" + e).text()
+        let details = $("#details_" + e).text()
+        let selectCategory = document.querySelectorAll(".selectCategory")
+        let selectInstructor = document.querySelectorAll(".selectInstructor")
+
+        //select Options
+        selectCategory.forEach(function (e) {  
+            if (e.value = courseId) {
+                e.setAttribute("selected", "")
+            }
+        });
+
+        selectInstructor.forEach(function (e) {
+            if (e.value = instructorId) {
+                e.setAttribute("selected", "")
+            }
+        });
+        //set Data In Modal
+        $("#id").val(e);
+        $("#oldpic").val(thumb)
+        $("#title").val(title);
+        $("#cfees").val(fees);
+        $("#cdiscount").val(discount);
+        $("#cduration").val(duration);
+        editor.setData(details)
+
+    }
+
+
+</script>

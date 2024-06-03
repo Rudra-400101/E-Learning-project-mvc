@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "FeedbackManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<style>
+    .mngfeedmenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Feedbacks </b> &nbsp;&nbsp;<span class="border shadow-sm py-2 px-3 text-danger fw-bold rounded">@Model.Rows.Count</span></p>
+        int i = 0;
+        <table class="table table-bordered table-hover" id="myTable">
+            <thead class="table-primary">
+                <tr>
+                    <th>Sr</th>
+                    <th>Full Name</th>
+                    <th>Course</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Comments</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow dt in Model.Rows)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@dt["fullname"]</td>
+                        <td>@dt["title"]-@dt["courseId"]</td>
+                        <td>@dt["email"]</td>
+                        <td>@dt["subject"]</td>
+                        <td>@dt["comment"]</td>
+                        <td>
+                            <a href="/admin/feedbackmanagement/@dt[0]" onclick="return confirm('Do You Really Want To Delete?')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            @if (Convert.ToInt32(dt["status"]) == 1)
+                            {
+                                <a href="/admin/feedbackmanagement?status=@dt[0]" title="Active Category" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                            }
+                            else
+                            {
+                                <a href="/admin/feedbackmanagement?status=@dt[0]" title="Deactive Category" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>

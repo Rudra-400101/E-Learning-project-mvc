@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "AddInstructor";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}<style>
+    #showOrHideSuccessAlert {
+        display: none;
+        z-index: 10;
+    }
+    .addinstmenu a, .addDetail {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+@*show alert*@
+<div class="alert alert-success alert-dismissible fw-bold top-0 w-100 p-3 position-fixed" id="showOrHideSuccessAlert" role="alert">
+    <i class="fa-solid fa-circle-check fs-3"></i> <span id="successAlert" class="fs-5"></span>
+</div>
+
+<div class="row mt-5">
+    <div class=" col-md-5 border mx-auto shadow ">
+        <form id="formData" enctype="multipart/form-data">
+            <div class="text-center fw-bold fs-3 text-secondary">
+                <span>ADD</span> <span class="text-info">INSTRUCTOR</span>
+            </div>
+            <div class="add-course-form mt-2">
+                <div class="form-group">
+                    <label class="add-course-label">Name</label>
+                    <input name="name" id="name" type="text" class="form-control" placeholder="Enter Teacher Name">
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Email</label>
+                    <input name="email" id="email" type="email" class="form-control" placeholder="Enter Email Id">
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Mobile Number</label>
+                    <input name="mobno" id="mobno" type="number" class="form-control" placeholder="Enter Mobile Number">
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Gender:</label>
+                    <input class="ms-3" required name="gender" value="male" type="radio" />Male
+                    <input class="ms-3" required name="gender" value="female" type="radio" />Female
+                    <input class="ms-3" required name="gender" value="other" type="radio" />Other
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Profile Picture</label>
+                    <input name="profilePic" id="profilePic" type="file" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Profile Summery</label>
+                    <textarea name="summary" id="summary" class="form-control" placeholder="Enter Your Profile Summery"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">About Me</label>
+                    <textarea class="form-control" id="about" name="about" placeholder="Apne Baare me Kuchh Likjiye"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="add-course-label">Your Highest Qualification</label>
+                    <input name="qualification" id="qualification" type="text" class="form-control" placeholder="Enter Your Qualification">
+                </div>
+                <div class="form-group">
+                    <input type="button" onclick="addInstructor()" value="Add Instructor" class="form-control border btn btn-info text-light fw-bold" />
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    //get instructor Data From Form and send To Action Method For Add Instructor in Database
+    function addInstructor() {
+        if ($("#name").val() != "", $("#email").val() != "", $("#mobno").val() != "", $("#profilePic").get(0).files[0] != null, $("#summary") != "", $("#about").val() != "", $("#qualification").val() != "") {
+            let obj = new FormData();
+            let Data = $("#formData").serializeArray();
+            Data.forEach(function (e) {
+                obj.append(e.name, e.value);
+            })
+            obj.append('profilePic', $("#profilePic").get(0).files[0]); //et file
+            //ajax
+            $.ajax({
+                url: "/admin/addInstructor",
+                type: "post",
+                data: obj,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    document.getElementById("formData").reset();
+                    //show success alert
+                    document.getElementById("showOrHideSuccessAlert").style.display = "block";
+                    $("#successAlert").text(res);
+                    setTimeout(() => {
+                        document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                    }, 2000)
+                },
+                error: function () {
+                    alert("Error Occured")
+                }
+            })
+        } else {
+            //show all Fields Are Required Alert
+            document.getElementById("showOrHideSuccessAlert").style.display = "block";
+            $("#showOrHideSuccessAlert").html('<i class="fa-solid fs-3 fa-circle-exclamation"></i> ' + "&nbsp; All Fields Are Required");
+            $("#showOrHideSuccessAlert").addClass("alert-danger")
+            setTimeout(() => {
+                document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                $("#showOrHideSuccessAlert").removeClass("alert-danger")
+            }, 2000)
+        }
+    }
+</script>

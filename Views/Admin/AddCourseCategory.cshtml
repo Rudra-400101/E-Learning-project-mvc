@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "AddCourseCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    #showOrHideSuccessAlert {
+        display: none;
+        z-index: 10;
+    }
+
+    .addcatmenu a, .addDetail {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@*--------------------------------------------------alertbox-----------------------------------*@
+<div class="alert alert-success alert-dismissible fw-bold w-100 p-3 position-fixed" id="showOrHideSuccessAlert" role="alert">
+    <i class="fa-solid fa-circle-check fs-3"></i> <span id="successAlert" class="fs-5"></span>
+</div>
+<section class="page-content course-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+
+                    <div class="widget-set">
+                        <div class="widget-content multistep-form">
+                            <fieldset id="first">
+                                <div class="add-course-info">
+                                    <div class="add-course-inner-header">
+                                        <h4>Add Course Category</h4>
+                                    </div>
+                                    <div class="add-course-form">
+                                        <form id="categoryForm" enctype="multipart/form-data" method="post">
+                                            <div class="form-group">
+                                                <label class="add-course-label">Category Name</label>
+                                                <input type="text" id="categoryName" name="categoryName" class="form-control"  placeholder="Category Name....">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="add-course-label">Category Icon(only .PNG)</label>
+                                                <input type="file" id="categoryIcon" name="categoryIcon" class="form-control">
+                                            </div>
+                                            <input type="button" id="addCategory" value="Add Category" class="btn btn-danger"/>
+                                        </form>
+                                    </div>
+                                </div>
+                            </fieldset>
+                          
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    //get category data from form with serializeArray and send to action method for add in database
+    document.getElementById("addCategory").addEventListener("click", function () {
+        if ($("#categoryName").val() != "" && $("#categoryIcon").val()!="") {
+            let obj = new FormData();
+            let data = $("#categoryForm").serializeArray();
+            data.forEach(function (e) {
+                obj.append(e.name, e.value);
+            })
+            obj.append('pic', $("#categoryIcon").get(0).files[0]); //get file
+            //ajax
+            $.ajax({
+                url: "/admin/AddCourseCategory",
+                type: "post",
+                data: obj,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    document.getElementById("categoryForm").reset(); 
+                    //show Success alert
+                    document.getElementById("showOrHideSuccessAlert").style.display = "block";
+                    $("#successAlert").text(res);
+                    setTimeout(() => {
+                        document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                    }, 2000)
+                },
+                error: function (e) {
+                    alert("Error While Adding Data")
+                }
+            })
+        } else {
+            //All Fields Are Required Alert
+            document.getElementById("showOrHideSuccessAlert").style.display = "block";
+            $("#showOrHideSuccessAlert").html('<i class="fa-solid fs-3 fa-circle-exclamation"></i> ' + "&nbsp; All Fields Are Required");
+            $("#showOrHideSuccessAlert").addClass("alert-danger")
+            setTimeout(() => {
+                document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                $("#showOrHideSuccessAlert").removeClass("alert-danger")
+            }, 2000)
+        }
+    })
+</script>
+

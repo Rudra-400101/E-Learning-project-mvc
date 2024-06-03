@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "categoryManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@model System.Data.DataTable
+
+
+<style>
+    .mngcategorymenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Category</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="categoryForm" enctype="multipart/form-data" action="/admin/updateCategory" method="post">
+                    <input type="number" id="id" hidden name="id" />
+                    <input type="text" id="oldpic" hidden name="oldpic" />
+                    <div class="form-group">
+                        <label class="add-course-label">Category Name</label>
+                        <input type="text" id="categoryName" name="categoryName" class="form-control" placeholder="Category Name....">
+                    </div>
+                    <div class="form-group">
+                        <label class="add-course-label">Category Icon(only .PNG)</label>
+                        <input type="file" id="categoryIcon" name="categoryIcon" class="form-control">
+                    </div>
+                    <input type="submit" id="addCategory" value="Update Category" class="btn btn-danger" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Category </b> &nbsp;&nbsp;<span class="border shadow-sm py-2 px-3 rounded text-danger fw-bold">@Model.Rows.Count</span></p>
+        <table class="table table-bordered text-center w-75" id="myTable">
+            <thead class="table-secondary">
+                <tr>
+                    <th class="text-center">Sr</th>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">Category Icon</th>
+                    <th class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    foreach (System.Data.DataRow dt in Model.Rows)
+                    {
+                        i++;
+                        <tr>
+                            <td class="text-center">@i</td>
+                            <td id="cname_@dt[0]">@dt["cname"]</td>
+                            <td class="text-center"><img src="~/Content/categoryPic/@dt["cpic"]" height="50" /></td>
+                            <td>
+                                <a href="/admin/deleteCategory?id=@dt[0]&pic=@dt["cpic"]" class="btn btn-danger" onclick="return confirm('Do You Really Want To Delete?')"><i class="fa-solid fa-trash"></i></a>
+
+                                <button type="button" class="btn btn-primary" onclick="editCategory(@dt[0],'@dt["cpic"]')" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                @if (Convert.ToInt32(dt["status"]) == 1)
+                                {
+                                    <a href="/admin/updateCategory?status=@dt[0]" title="Active Category" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/admin/updateCategory?status=@dt[0]" title="Deactive Category" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2 class="text-center text-secondary my-5">Please Add Category.....</h2>
+    }
+}
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+
+<script>
+    //set data in modal for edit category
+    function editCategory(e, pic) {
+
+        let cname = $("#cname_" + e).text();
+        $("#categoryName").val(cname);
+        $("#id").val(e);
+        $("#oldpic").val(pic);
+
+    }
+</script>

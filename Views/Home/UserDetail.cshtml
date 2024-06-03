@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "UserDetail";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .profileviewmenu a, .profile {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+    #canceledit{
+        display:none;
+    }
+</style>
+
+@*Modal*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Profile Picture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/home/updateProfile" method="post" enctype="multipart/form-data">
+                    <input type="text" value="@Model.Rows[0]["pic"]" name="pic" hidden />
+                    <label>Select Picture</label>
+                    <input type="file" name="picture" class="form-control" />
+                    <input type="submit" value="Update" class="btn btn-success mt-3" />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            @if (Model != null)
+            {
+                foreach (System.Data.DataRow dt in Model.Rows)
+                {
+                    <div class="col-xl-3 col-md-4 ">
+                        <div class="settings-widget dash-profile mb-3">
+                            <div class="settings-menu p-0">
+                                <div class="profile-bg">
+                                    <h5>Beginner</h5>
+                                    <img src="~/Content/RegisterPic/@dt["pic"]">
+                                    <div class="profile-img">
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="~/Content/RegisterPic/@dt["pic"]"></a>
+                                    </div>
+                                </div>
+                                <div class="profile-group">
+                                    <div class="profile-name text-center">
+                                        <h4><a href="/home/userDetail">@dt["name"]</a></h4>
+                                        <p>Student</p>
+                                    </div>
+                                    <div class="go-dashboard text-center">
+                                        <a href="/home/index" class="btn btn-primary">Go to Dashboard</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-widget account-settings">
+                            <div class="settings-menu">
+                                <h3>ACCOUNT SETTINGS</h3>
+                                <ul>
+                                    <li class="nav-item active">
+                                        <a href="/home/userDetail#editUserDetails" class="nav-link">
+                                            <i class="feather-settings"></i> Edit Profile
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/home/changePassword" class="nav-link">
+                                            <i class="feather-user-plus"></i> Change Password
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/home/myComments" class="nav-link">
+                                            <i class="feather-message-square"></i> My Comments
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/home/logout" class="nav-link">
+                                            <i class="feather-power"></i> Sign Out
+                                        </a>
+                                    </li>
+                                </ul>
+                                <h3>SUBSCRIPTION</h3>
+                                <ul>
+                                    <li class="nav-item">
+                                        <a href="/home/myCourse" class="nav-link ">
+                                            <i class="feather-calendar"></i> My Courses
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-xl-9 col-md-8">
+                        <div class="settings-widget profile-details">
+                            <div class="settings-menu p-0">
+                                <div class="profile-heading">
+                                    <h3>Profile Details</h3>
+                                    <p>You have full control to manage your own account setting.</p>
+                                </div>
+                                <div class="course-group mb-0 d-flex">
+                                    <div class="course-group-img d-flex align-items-center">
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal"><img src="~/Content/RegisterPic/@dt["pic"]" class="img-fluid"></a>
+                                        <div class="course-name">
+                                            <h4><a data-bs-toggle="modal" style="cursor:pointer;" data-bs-target="#exampleModal">Change Your Profile Picture</a></h4>
+                                            <p>PNG or JPG no bigger than 800px wide and tall.</p>
+                                        </div>
+                                    </div>
+                                    <div class="profile-share d-flex align-items-center justify-content-center">
+                                        <a href="javascript:;" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success">Update</a>
+                                    </div>
+                                </div>
+                                <div class="checkout-form personal-address add-course-info ">
+                                    <div class="personal-info-head">
+                                        <h4>Personal Details</h4>
+                                        <p>Edit your personal information and address.</p>
+                                    </div>
+                                    <form action="/home/updateProfile" method="post" id="editUserDetails">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <input type="text" value="@dt["course"]" id="selectCourse" hidden />
+                                                <input type="text" value="@dt["year"]" id="selectYear" hidden />
+                                                <input type="text" value="@dt["gender"]" id="selectGender" hidden />
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Name</label>
+                                                    <input type="text" name="name" readonly value="@dt["name"]" class="form-control editprofile" placeholder="Enter your Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Email</label>
+                                                    <input type="email" readonly name="email" value="@dt["email"]" class="form-control editprofile" placeholder="Enter Your Email">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Course</label>
+                                                    <select class="form-control editprofile" disabled name="course">
+                                                        <option disabled selected>--select course--</option>
+                                                        <option class="course">B-Tech</option>
+                                                        <option class="course">BCA</option>
+                                                        <option class="course">MCA</option>
+                                                        <option class="course">Diploma</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">Mobile</label>
+                                                    <input type="number" readonly value="@dt["mobno"]" name="mob" class="form-control editprofile" placeholder="Enter your Mobile Number">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="form-control-label">College</label>
+                                                    <input type="text" readonly name="college" value="@dt["college"]" class="form-control editprofile" placeholder="Birth of Date">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Year</b></label>
+                                                    <select name="year" id="year" disabled class="form-select editprofile">
+                                                        <option class="year">First</option>
+                                                        <option class="year">Second</option>
+                                                        <option class="year">Third</option>
+                                                        <option class="year">Fourth</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <input type="radio" disabled class="gender editprofile" name="gender" value="male" /> Male &nbsp;
+                                                    <input type="radio" disabled class="gender editprofile" name="gender" value="female" /> Female &nbsp;
+                                                    <input type="radio" disabled class="gender editprofile" name="gender" value="other" /> Other &nbsp;
+                                                </div>
+                                            </div>
+                                            <div class="update-profile">
+                                                <input type="button" id="editbtn" class="btn btn-primary" value="Edit Profile">
+                                                <input type="button" value="cancel" id="canceledit" class="btn border-danger text-danger" onclick="cancelbtn()" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        //remove readonly atrribute for edit user datails
+        $("#editbtn").click(function () {
+            if ($("#editbtn").val() == "Edit Profile") {
+                editProfile();
+                $("#editbtn").val("Update Profile");
+            } else {
+                $("#editbtn").attr("type", "submit")
+            }
+        })
+        //get data from user for set in input tags
+            let course = $("#selectCourse").val()
+            let year = $("#selectYear").val()
+            let gender = $("#selectGender").val()
+            let courselist = document.querySelectorAll(".course")
+            let yearlist = document.querySelectorAll(".year")
+            let genderlist = document.querySelectorAll(".gender")
+
+            //select data according to old records
+            courselist.forEach(function (e) {
+                if (e.value == course) {
+                    e.setAttribute("selected", "");
+
+                }
+            })
+            yearlist.forEach(function (e) {
+                if (e.value == year) {
+                    e.setAttribute("selected", "");
+
+                }
+            })
+            genderlist.forEach(function (e) {
+                if (e.value == gender) {
+                    e.setAttribute("checked", "");
+                }
+            })
+    
+    })
+
+    //remove readonly or disabled input while click on edit button
+    let coll = document.querySelectorAll(".editprofile")
+    const editProfile=()=>{
+        coll.forEach(function (e) {
+            e.removeAttribute("readonly")
+            e.removeAttribute("disabled")
+            document.getElementById("canceledit").style.display = "inline";
+        })
+    }
+    const cancelbtn = () => {
+        coll.forEach(function (e) {
+            e.setAttribute("readonly", "");
+            e.setAttribute("disabled", "");
+            $("#editbtn").val("Edit Profile");
+            document.getElementById("canceledit").style.display = "none";
+        })
+    }
+</script>

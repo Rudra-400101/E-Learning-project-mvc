@@ -1,0 +1,277 @@
+﻿
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    #events {
+        display: none;
+    }
+
+    .invoicemenu a, .profile {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@if (Model != null)
+{
+<div class="page-content">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-xl-9 col-md-8">
+                <div class="settings-widget profile-details">
+                    <div class="settings-menu invoice-list-blk p-0 ">
+                        <div class="card pro-post border-0 mb-0">
+                            <div class="card-body">
+                                <div class="invoice-item">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="invoice-logo">
+                                                <img src="~/Content/assets/img/study-logo.png" alt="logo">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="invoice-details">
+                                                <strong>Issued:</strong> @DateTime.Now<br />
+                                                <strong>OrderId:</strong> @ViewBag.OrderId
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="invoice-item">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="invoice-info">
+                                                <strong class="customer-text">Invoice From</strong>
+                                                <p class="invoice-details invoice-details-two">
+                                                    Rudra Pratap Singh <br>
+                                                    Maholi Tarwa Mehnagr Azamgarh<br>
+                                                    Up 276123 <br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="invoice-info invoice-info2">
+                                                <strong class="customer-text">Invoice To</strong>
+                                                <p class="invoice-details">
+                                                    @Model["name"] <br>
+                                                    @Model["email"] <br>
+                                                    @Model["college"] <br>
+                                                    @Model["mobno"]<br />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="invoice-item invoice-table-wrap">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="invoice-table table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Project</th>
+                                                            <th>Description</th>
+                                                            <th class="text-center">Quantity</th>
+                                                            <th class="text-end">Fee</th>
+                                                            @if (!Model["email1"].Equals(DBNull.Value))
+                                                            {
+
+
+                                                                <th>Discount</th>
+                                                                <th>Expiry Date</th>
+                                                            }
+                                                            else
+                                                            {
+                                                                <th>Expiry Date</th>
+
+                                                            }
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>@Model["title"]</td>
+                                                            <td>@Html.Raw(Model["details"])</td>
+                                                            <td class="text-center">1</td>
+                                                            <td class="text-end">@{int total = Model["fees"] - Model["discount"];@total}</td>
+                                                            @if (!Model["email1"].Equals(DBNull.Value))
+                                                            {
+                                                                <td>@Model["discountAmount"]</td>
+                                                                <td id="expiryDate">@Convert.ToDateTime(Model["newExpiry"]).ToString("yyyy-MM-dd")</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td id="expiryDate">@Convert.ToDateTime(Model["duration"]).ToString("yyyy-MM-dd")</td>
+
+                                                            }
+                                                        </tr>
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-xl-4 ms-auto">
+                                            <div class="table-responsive">
+                                                <table class="invoice-table-two table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Subtotal:</th>
+                                                            <td><span>@total</span></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Discount:</th>
+                                                            <td>
+                                                                <span class="text-danger">
+                                                                    @if (!Model["email1"].Equals(DBNull.Value))
+                                                                    {
+                                                                        @:- @Model["discountAmount"]
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @: -0
+                                                                    }
+
+
+
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Total Amount:</th>
+                                                            <td>
+                                                                <span class="text-success" id="finalFee">
+                                                                    @{ if (!Model["email1"].Equals(DBNull.Value))
+                                                                        {
+                                                                            int sum = (Model["fees"] - Model["discount"]) - Model["discountamount"];
+                                                                            @sum
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            int sum = Model["fees"] - Model["discount"];
+                                                                            @sum
+                                                                        }
+
+
+
+
+                                                                    }
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <button class="login-head button" id="submitEnroll">Enroll Now</button>
+                                <button class="btn btn-danger fw-bold" onclick="printReceipt()">Print Receipt</button>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+}
+else
+            {
+                <h2 class="text-center my-5 text-secondary">You do not have any Discount...</h2>
+            }
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    //get data for Enroll User And Enrolled Him
+  
+
+    //integrate payment gateway----------------------------------------------------------
+         let orderId = "@ViewBag.OrderId";  
+     let options = {
+         "name": "Code Helper",
+         "description": "@Html.Raw(Model["details"])",
+         "order_id": orderId,
+         "image": "https://localhost:44341/Content/assets/img/study-logo.png",
+         "prefill": {
+             "name":"@Model["name"]",
+             "email":"@Model["email"]",
+             "contact":"@Model["mobno"]",
+         },
+         "notes": {
+             "address": "@Model["college"]"
+         },
+         "theme": {
+             "color": "#3399cc"
+         }
+    }
+
+    // Boolean whether to show image inside a white frame. (default: true)
+        options.theme.image_padding = false;
+        options.handler = function (response) {
+            $.ajax({
+                url: "/home/ManagePayment",
+                type: "get",
+                data: { paymentId: response.razorpay_payment_id, orderId: orderId, signature: response.razorpay_signature },
+                responseType: "Json",
+                success: function (res) {
+                    swal("sucess", res, "success");
+                    $.ajax({
+                        url: "/home/AddEnrollStudent",
+                        type: "post",
+                        data: { "orderid": orderId, "courseId": @Request.QueryString["course_id"], "email": "@Model["email"]", "finalfee": $("#finalFee").text(), expiryDate: $("#expiryDate").text() },
+                        responseType: "Json",
+                        success: function (res) {
+                            swal("success", res, "success");
+                            setTimeout(() => {
+                                location.href = "/home/mycourse";
+
+                            },2000)
+                        },
+                        error: function () {
+                            swal("error", "Some Error Occured. Please try after sometime.", "error");
+                        }
+                    })
+                },
+                error: function () {
+                    swal("Sorry! Please wait", "Server down please try after some time", "error");
+                }
+            });
+        };
+        options.modal = {
+            ondismiss: function () {
+                console.log("This code runs when the popup is closed");
+            },
+            // Boolean indicating whether pressing escape key
+            // should close the checkout form. (default: true)
+            escape: true,
+            // Boolean indicating whether clicking translucent blank
+            // space outside checkout form should close the form. (default: false)
+            backdropclose: false
+        };
+        var rzp = new Razorpay(options);
+        $("#submitEnroll").click(function (e) {
+            rzp.open();
+            e.preventDefault();
+
+        });
+
+    //print Receipt---------------------------------------
+    let pbody;
+    function printReceipt() {
+        pbody = document.body.innerHTML;
+        document.body.innerHTML = document.querySelector(".card").innerHTML;
+        print();
+        document.body.innerHTML = pbody;
+    }
+</script>

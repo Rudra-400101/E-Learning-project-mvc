@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .page-content{
+        background:url("/Content/assets/img/login-bg.png");
+    }
+</style>
+
+<section class="page-content course-sec mb-3 shadow">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+
+                <div class="widget-set">
+
+                    <div class="widget-content multistep-form">
+                        <fieldset id="first">
+                            <form method="post" enctype="multipart/form-data" action="/home/Register">
+                                <div class="add-course-info card shadow">
+                                    <div class="add-course-inner-header">
+                                        <h4 class="text-secondary text-center mt-3 fw-bolder">User Registeration <span class="text-primary">Page..</span></h4>
+                                    </div>
+
+                                    <div class="add-course-form">
+
+                                        <div class="row mt-2">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Name</b></label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Email ID</b></label>
+                                                    <input type="email" class="form-control" name="email" id="email" placeholder="example@gmail.com">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Password</b></label>
+                                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Course</b></label>
+                                                    <select class="form-control " name="course">
+                                                        <option disabled selected>--select course--</option>
+                                                     <option>B-Tech</option>
+                                                        <option>BCA</option>
+                                                        <option>MCA</option>
+                                                        <option>Diploma</option>
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Mobile Number</b></label>
+                                                    <input type="number" class="form-control" name="mob" id="number" placeholder="Enter your mobile number">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>College</b></label>
+                                                    <input type="text" class="form-control" name="college" id="college" placeholder="Enter your collage name">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Year</b></label>
+                                                  <select name="year" id="year" class="form-select">
+                                                      <option>First</option>
+                                                      <option>Second</option>
+                                                      <option>Third</option>
+                                                      <option>Fourth</option>
+                                                  </select>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Profile Picture</b></label>
+                                                    <input type="file" class="form-control" name="picture" id="picture" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="add-course-label"><b>Gender</b></label>
+                                                <input type="radio" style="margin-left:50px;" name="gender" value="male" /> Male
+                                                <input type="radio" style="margin-left:50px;" name="gender" value="female" /> FeMale
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="widget-btn">
+                                        <input type="reset" value="Reset" class="btn btn-black next_btn" />
+                                        <input type="submit" value="Add" class="btn btn-info-light next_btn" />
+                                    </div>
+                                </div>
+                            </form>
+                        </fieldset>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+

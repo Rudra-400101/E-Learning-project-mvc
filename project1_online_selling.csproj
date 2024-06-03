@@ -1,0 +1,650 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ECDC0AFD-8F06-4932-9132-BAC7B1A41A38}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>project1_online_selling</RootNamespace>
+    <AssemblyName>project1_online_selling</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44341</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.CrystalReports.Engine.1.0.0\lib\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ClientDoc, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.ClientDoc.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.ClientDoc.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommLayer, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.CommLayer.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.CommLayer.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonControls, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.CommonControls.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.CommonControls.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CommonObjectModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.CommonObjectModel.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.CommonObjectModel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Controllers, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.Controllers.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.Controllers.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.CubeDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.CubeDefModel.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.CubeDefModel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.DataDefModel.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.DataDefModel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.DataSetConversion, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.DataSetConversion.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.DataSetConversion.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ObjectFactory, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.ObjectFactory.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.ObjectFactory.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.Prompting, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.Prompting.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.Prompting.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.ReportDefModel, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.ReportDefModel.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.ReportDefModel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportAppServer.XmlSerialize, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.ReportAppServer.XmlSerialize.13.0.4003\lib\net40\CrystalDecisions.ReportAppServer.XmlSerialize.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.ReportSource.1.0.0\lib\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.Shared.1.0.0\lib\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalReports.Web.13.0.4003\lib\net40\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <HintPath>..\packages\CrystalDecisions.Windows.Forms.1.0.0\lib\CrystalDecisions.Windows.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=32.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.32.0.2\lib\net48\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.68.0\lib\net462\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.68.0\lib\net462\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.Mvc, Version=1.62.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.Mvc.1.62.0\lib\net45\Google.Apis.Auth.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.68.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.68.0\lib\net462\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Oauth2.v2, Version=1.68.0.1869, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Oauth2.v2.1.68.0.1869\lib\net462\Google.Apis.Oauth2.v2.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Plus.v1, Version=1.49.0.1627, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Plus.v1.1.49.0.1627\lib\net45\Google.Apis.Plus.v1.dll</HintPath>
+    </Reference>
+    <Reference Include="GoogleAuthentication, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleAuthentication.1.0.0\lib\net46\GoogleAuthentication.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.4\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.2.2\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Razorpay, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Razorpay.3.1.2\lib\net47\Razorpay.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=110.2.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.110.2.0\lib\net471\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net, Version=44.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Stripe.net.44.7.0\lib\net461\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CodeDom, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CodeDom.7.0.0\lib\net462\System.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=7.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.7.0.2\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CourseModel.cs" />
+    <Compile Include="Models\CustomeRoleManager.cs" />
+    <Compile Include="Models\DBLayer.cs" />
+    <Compile Include="Models\enrollstudentDashboard.cs" />
+    <Compile Include="Models\Feedback.cs" />
+    <Compile Include="Models\InstructorData.cs" />
+    <Compile Include="Models\OfferData.cs" />
+    <Compile Include="Models\Register.cs" />
+    <Compile Include="Models\VideoData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Code2Night.jpeg" />
+    <Content Include="Content\assets\css\bootstrap.min.css" />
+    <Content Include="Content\assets\css\feather.css" />
+    <Content Include="Content\assets\css\loginpage\style.css" />
+    <Content Include="Content\assets\css\owl.carousel.min.css" />
+    <Content Include="Content\assets\css\owl.theme.default.min.css" />
+    <Content Include="Content\assets\css\owl.video.play.html" />
+    <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\fonts\Feather144f.svg" />
+    <Content Include="Content\assets\img\admin-img.jpg" />
+    <Content Include="Content\assets\img\ban-bg.png" />
+    <Content Include="Content\assets\img\banner-background-img-1.png" />
+    <Content Include="Content\assets\img\banner.png" />
+    <Content Include="Content\assets\img\become-01.png" />
+    <Content Include="Content\assets\img\become-02.png" />
+    <Content Include="Content\assets\img\bg-banner-01.png" />
+    <Content Include="Content\assets\img\bg-banner-02.png" />
+    <Content Include="Content\assets\img\bg-banner.png" />
+    <Content Include="Content\assets\img\bg\banner-vector.svg" />
+    <Content Include="Content\assets\img\bg\bg-3.png" />
+    <Content Include="Content\assets\img\bg\bg-footer.jpg" />
+    <Content Include="Content\assets\img\bg\footer-left.svg" />
+    <Content Include="Content\assets\img\bg\footer-right.svg" />
+    <Content Include="Content\assets\img\bg\home-left.png" />
+    <Content Include="Content\assets\img\bg\home-main.png" />
+    <Content Include="Content\assets\img\bg\home-middle.png" />
+    <Content Include="Content\assets\img\bg\home-right-bottom.png" />
+    <Content Include="Content\assets\img\bg\home-right.png" />
+    <Content Include="Content\assets\img\bg\instructor-vector-left.svg" />
+    <Content Include="Content\assets\img\bg\instructor-vector-right.svg" />
+    <Content Include="Content\assets\img\bg\map-user.png" />
+    <Content Include="Content\assets\img\bg\map.png" />
+    <Content Include="Content\assets\img\bg\master-vector-left.svg" />
+    <Content Include="Content\assets\img\bg\patter-one.png" />
+    <Content Include="Content\assets\img\bg\pattern-01.png" />
+    <Content Include="Content\assets\img\bg\pattern-02.png" />
+    <Content Include="Content\assets\img\bg\pattern-03.png" />
+    <Content Include="Content\assets\img\bg\pattern-04.png" />
+    <Content Include="Content\assets\img\bg\pattern-05.svg" />
+    <Content Include="Content\assets\img\bg\pattern-06.svg" />
+    <Content Include="Content\assets\img\bg\quote.svg" />
+    <Content Include="Content\assets\img\bg\shape-1.png" />
+    <Content Include="Content\assets\img\bg\shape-2.png" />
+    <Content Include="Content\assets\img\bg\skill-icon-01.png" />
+    <Content Include="Content\assets\img\bg\skill-icon-02.png" />
+    <Content Include="Content\assets\img\bg\skill-icon-03.png" />
+    <Content Include="Content\assets\img\certificate-icon.svg" />
+    <Content Include="Content\assets\img\client\client-01.svg" />
+    <Content Include="Content\assets\img\client\client-02.svg" />
+    <Content Include="Content\assets\img\client\client-03.svg" />
+    <Content Include="Content\assets\img\client\client-04.svg" />
+    <Content Include="Content\assets\img\client\client-05.svg" />
+    <Content Include="Content\assets\img\cources-icon.svg" />
+    <Content Include="Content\assets\img\course-bg.png" />
+    <Content Include="Content\assets\img\deposit-01.jpg" />
+    <Content Include="Content\assets\img\deposit-02.jpg" />
+    <Content Include="Content\assets\img\deposit-03.jpg" />
+    <Content Include="Content\assets\img\deposit-04.jpg" />
+    <Content Include="Content\assets\img\error-01.png" />
+    <Content Include="Content\assets\img\error-02.png" />
+    <Content Include="Content\assets\img\error-bg1.png" />
+    <Content Include="Content\assets\img\error.png" />
+    <Content Include="Content\assets\img\favicon.svg" />
+    <Content Include="Content\assets\img\footer-background-img.png" />
+    <Content Include="Content\assets\img\gratuate-icon.svg" />
+    <Content Include="Content\assets\img\home-six-banner.jpg" />
+    <Content Include="Content\assets\img\icon-three\award.svg" />
+    <Content Include="Content\assets\img\icon-three\building.svg" />
+    <Content Include="Content\assets\img\icon-three\career-01.svg" />
+    <Content Include="Content\assets\img\icon-three\career-02.svg" />
+    <Content Include="Content\assets\img\icon-three\career-03.svg" />
+    <Content Include="Content\assets\img\icon-three\career-04.svg" />
+    <Content Include="Content\assets\img\icon-three\check-round-1.svg" />
+    <Content Include="Content\assets\img\icon-three\check-round-2.svg" />
+    <Content Include="Content\assets\img\icon-three\check-round-3.svg" />
+    <Content Include="Content\assets\img\icon-three\course-01.svg" />
+    <Content Include="Content\assets\img\icon-three\course-02.svg" />
+    <Content Include="Content\assets\img\icon-three\course-03.svg" />
+    <Content Include="Content\assets\img\icon-three\course-04.svg" />
+    <Content Include="Content\assets\img\icon-three\ellipse-1.svg" />
+    <Content Include="Content\assets\img\icon-three\ellipse-2.svg" />
+    <Content Include="Content\assets\img\icon-three\ellipse-3.svg" />
+    <Content Include="Content\assets\img\icon-three\email.svg" />
+    <Content Include="Content\assets\img\icon-three\search-icon.svg" />
+    <Content Include="Content\assets\img\icon-three\student-icon.svg" />
+    <Content Include="Content\assets\img\icon-three\student.svg" />
+    <Content Include="Content\assets\img\icon-three\time.svg" />
+    <Content Include="Content\assets\img\icon-three\winning.svg" />
+    <Content Include="Content\assets\img\icon\award-new.svg" />
+    <Content Include="Content\assets\img\icon\cart.svg" />
+    <Content Include="Content\assets\img\icon\chapter.svg" />
+    <Content Include="Content\assets\img\icon\chart.svg" />
+    <Content Include="Content\assets\img\icon\check-circle.svg" />
+    <Content Include="Content\assets\img\icon\close-circle.svg" />
+    <Content Include="Content\assets\img\icon\cloud.svg" />
+    <Content Include="Content\assets\img\icon\count-four.svg" />
+    <Content Include="Content\assets\img\icon\count-one.svg" />
+    <Content Include="Content\assets\img\icon\count-three.svg" />
+    <Content Include="Content\assets\img\icon\count-two.svg" />
+    <Content Include="Content\assets\img\icon\home-search-six.svg" />
+    <Content Include="Content\assets\img\icon\icon-01.svg" />
+    <Content Include="Content\assets\img\icon\icon-02.svg" />
+    <Content Include="Content\assets\img\icon\icon-07.svg" />
+    <Content Include="Content\assets\img\icon\icon-08.svg" />
+    <Content Include="Content\assets\img\icon\icon-09.svg" />
+    <Content Include="Content\assets\img\icon\icon-1.svg" />
+    <Content Include="Content\assets\img\icon\icon-10.svg" />
+    <Content Include="Content\assets\img\icon\icon-12.svg" />
+    <Content Include="Content\assets\img\icon\icon-13.svg" />
+    <Content Include="Content\assets\img\icon\icon-14.svg" />
+    <Content Include="Content\assets\img\icon\icon-15.svg" />
+    <Content Include="Content\assets\img\icon\icon-16.svg" />
+    <Content Include="Content\assets\img\icon\icon-17.svg" />
+    <Content Include="Content\assets\img\icon\icon-18.svg" />
+    <Content Include="Content\assets\img\icon\icon-19.svg" />
+    <Content Include="Content\assets\img\icon\icon-2.svg" />
+    <Content Include="Content\assets\img\icon\icon-20.svg" />
+    <Content Include="Content\assets\img\icon\icon-21.svg" />
+    <Content Include="Content\assets\img\icon\icon-22.svg" />
+    <Content Include="Content\assets\img\icon\icon-23.svg" />
+    <Content Include="Content\assets\img\icon\icon-24.svg" />
+    <Content Include="Content\assets\img\icon\icon-25.svg" />
+    <Content Include="Content\assets\img\icon\icon-26.svg" />
+    <Content Include="Content\assets\img\icon\icon-27.svg" />
+    <Content Include="Content\assets\img\icon\icon-3.svg" />
+    <Content Include="Content\assets\img\icon\icon-4.svg" />
+    <Content Include="Content\assets\img\icon\import.svg" />
+    <Content Include="Content\assets\img\icon\joing-01.svg" />
+    <Content Include="Content\assets\img\icon\joing-02.svg" />
+    <Content Include="Content\assets\img\icon\joing-03.svg" />
+    <Content Include="Content\assets\img\icon\joing-04.svg" />
+    <Content Include="Content\assets\img\icon\key.svg" />
+    <Content Include="Content\assets\img\icon\lock.svg" />
+    <Content Include="Content\assets\img\icon\message-text.svg" />
+    <Content Include="Content\assets\img\icon\messages.svg" />
+    <Content Include="Content\assets\img\icon\mobile.svg" />
+    <Content Include="Content\assets\img\icon\notification.svg" />
+    <Content Include="Content\assets\img\icon\people.svg" />
+    <Content Include="Content\assets\img\icon\play-icon.svg" />
+    <Content Include="Content\assets\img\icon\play.svg" />
+    <Content Include="Content\assets\img\icon\teacher.svg" />
+    <Content Include="Content\assets\img\icon\timer-icon.svg" />
+    <Content Include="Content\assets\img\icon\timer-start.svg" />
+    <Content Include="Content\assets\img\icon\timer.svg" />
+    <Content Include="Content\assets\img\icon\user-icon.svg" />
+    <Content Include="Content\assets\img\icon\users.svg" />
+    <Content Include="Content\assets\img\icon\video.svg" />
+    <Content Include="Content\assets\img\icon\wish.svg" />
+    <Content Include="Content\assets\img\inner-banner.jpg" />
+    <Content Include="Content\assets\img\instructor-profile-bg.jpg" />
+    <Content Include="Content\assets\img\instructor\address-icon.png" />
+    <Content Include="Content\assets\img\instructor\courses-icon.png" />
+    <Content Include="Content\assets\img\instructor\email-icon.png" />
+    <Content Include="Content\assets\img\instructor\instructor-01.jpg" />
+    <Content Include="Content\assets\img\instructor\instructor-02.jpg" />
+    <Content Include="Content\assets\img\instructor\instructor-03.jpg" />
+    <Content Include="Content\assets\img\instructor\instructor-04.jpg" />
+    <Content Include="Content\assets\img\instructor\instructor-bg-banner.png" />
+    <Content Include="Content\assets\img\instructor\phone-icon.png" />
+    <Content Include="Content\assets\img\instructor\profile-avatar.jpg" />
+    <Content Include="Content\assets\img\instructor\review-icon.png" />
+    <Content Include="Content\assets\img\instructor\ttl-stud-icon.png" />
+    <Content Include="Content\assets\img\lead-01.png" />
+    <Content Include="Content\assets\img\lead-02.png" />
+    <Content Include="Content\assets\img\lead-03.png" />
+    <Content Include="Content\assets\img\lead-04.png" />
+    <Content Include="Content\assets\img\lead-05.png" />
+    <Content Include="Content\assets\img\lead-06.png" />
+    <Content Include="Content\assets\img\login-bg.png" />
+    <Content Include="Content\assets\img\login-img.png" />
+    <Content Include="Content\assets\img\logo.svg" />
+    <Content Include="Content\assets\img\logo1.png" />
+    <Content Include="Content\assets\img\logo1.svg" />
+    <Content Include="Content\assets\img\logo\logo-five.png" />
+    <Content Include="Content\assets\img\logo\logo-five.svg" />
+    <Content Include="Content\assets\img\logo\logo.png" />
+    <Content Include="Content\assets\img\logo\logo.svg" />
+    <Content Include="Content\assets\img\net-icon-01.png" />
+    <Content Include="Content\assets\img\net-icon-02.png" />
+    <Content Include="Content\assets\img\net-icon-03.png" />
+    <Content Include="Content\assets\img\net-icon-04.png" />
+    <Content Include="Content\assets\img\object.png" />
+    <Content Include="Content\assets\img\pencil-icon.svg" />
+    <Content Include="Content\assets\img\plan.png" />
+    <Content Include="Content\assets\img\profile-bg.jpg" />
+    <Content Include="Content\assets\img\qute-01.png" />
+    <Content Include="Content\assets\img\qute.png" />
+    <Content Include="Content\assets\img\reviews-img-two.png" />
+    <Content Include="Content\assets\img\send-icon.svg" />
+    <Content Include="Content\assets\img\share.png" />
+    <Content Include="Content\assets\img\skil-01.png" />
+    <Content Include="Content\assets\img\study-logo.png" />
+    <Content Include="Content\assets\img\support-bg.png" />
+    <Content Include="Content\assets\img\testimonial-background-img-1.png" />
+    <Content Include="Content\assets\img\testimonial-background-img-2.png" />
+    <Content Include="Content\assets\img\user-love.jpg" />
+    <Content Include="Content\assets\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\assets\js\ckeditor.js" />
+    <Content Include="Content\assets\js\jquery-3.6.0.min.js" />
+    <Content Include="Content\assets\js\jquery.counterup.min.js" />
+    <Content Include="Content\assets\js\jquery.waypoints.js" />
+    <Content Include="Content\assets\js\owl.carousel.min.js" />
+    <Content Include="Content\assets\js\script.js" />
+    <Content Include="Content\assets\js\validation.js" />
+    <Content Include="Content\assets\plugins\aos\aos.css" />
+    <Content Include="Content\assets\plugins\aos\aos.js" />
+    <Content Include="Content\assets\plugins\apexchart\apexcharts.min.js" />
+    <Content Include="Content\assets\plugins\apexchart\chart-data.js" />
+    <Content Include="Content\assets\plugins\bootstrap-tagsinput\css\bootstrap-tagsinput.css" />
+    <Content Include="Content\assets\plugins\bootstrap-tagsinput\js\bootstrap-tagsinput.js" />
+    <Content Include="Content\assets\plugins\dropzone\dropzone.min.css" />
+    <Content Include="Content\assets\plugins\dropzone\dropzone.min.js" />
+    <Content Include="Content\assets\plugins\feather\feather.css" />
+    <Content Include="Content\assets\plugins\feather\feather.min.js" />
+    <Content Include="Content\assets\plugins\feather\fonts\Feather144f.svg" />
+    <Content Include="Content\assets\plugins\fontawesome\css\all.min.css" />
+    <Content Include="Content\assets\plugins\fontawesome\css\fontawesome.min.css" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-brands-400.html" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-regular-400.html" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-solid-900.html" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-v4compatibility.html" />
+    <Content Include="Content\assets\plugins\select2\css\select2.min.css" />
+    <Content Include="Content\assets\plugins\select2\js\select2.min.js" />
+    <Content Include="Content\assets\plugins\slick\slick-theme.css" />
+    <Content Include="Content\assets\plugins\slick\slick.css" />
+    <Content Include="Content\assets\plugins\slick\slick.js" />
+    <Content Include="Content\assets\plugins\swiper\css\swiper.min.css" />
+    <Content Include="Content\assets\plugins\swiper\js\swiper.min.js" />
+    <Content Include="Content\assets\plugins\theia-sticky-sidebar\ResizeSensor.js" />
+    <Content Include="Content\assets\plugins\theia-sticky-sidebar\theia-sticky-sidebar.js" />
+    <Content Include="Content\ckeditor.js" />
+    <Content Include="Content\datatables\datatables.css" />
+    <Content Include="Content\datatables\datatables.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\img\blog\" />
+    <Folder Include="Content\assets\img\category\" />
+    <Folder Include="Content\categoryPic\" />
+    <Folder Include="Content\coursePic\" />
+    <Folder Include="Content\csv\" />
+    <Folder Include="Content\instructorPic\" />
+    <Folder Include="Content\RegisterPic\" />
+    <Folder Include="CrystalReport\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\assets\fonts\Feather144f.ttf" />
+    <Content Include="Content\assets\fonts\Feather144f.woff" />
+    <Content Include="Content\assets\plugins\feather\fonts\Feather144f.ttf" />
+    <Content Include="Content\assets\plugins\feather\fonts\Feather144f.woff" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\assets\plugins\fontawesome\webfonts\fa-v4compatibility.ttf" />
+    <Content Include="libman.json" />
+    <None Include="packages.config" />
+    <Content Include="Views\Shared\GeneralLayout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\AdminLayout.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\AddCourseCategory.cshtml" />
+    <Content Include="Views\Admin\AddInstructor.cshtml" />
+    <Content Include="Views\Admin\InstructorManagement.cshtml" />
+    <Content Include="Views\Admin\categoryManagement.cshtml" />
+    <Content Include="Views\Admin\addCourse.cshtml" />
+    <Content Include="Views\Admin\CourseManagement.cshtml" />
+    <Content Include="Views\Home\Register.cshtml" />
+    <Content Include="Views\Admin\RegisterManagement.cshtml" />
+    <Content Include="Views\Admin\AddVideo.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\EmailVerify.cshtml" />
+    <Content Include="Views\Home\verifyOtp.cshtml" />
+    <Content Include="Views\Home\ResetPassword.cshtml" />
+    <Content Include="Views\Home\myCourse.cshtml" />
+    <Content Include="Views\Home\adminlogin.cshtml" />
+    <Content Include="Views\Home\UserDetail.cshtml" />
+    <Content Include="Views\Home\changePassword.cshtml" />
+    <Content Include="Views\Home\CourseDetail.cshtml" />
+    <Content Include="Views\Home\CategoryWiseCourse.cshtml" />
+    <Content Include="Views\Admin\VideoManagement.cshtml" />
+    <Content Include="Views\Admin\FeedbackManagement.cshtml" />
+    <Content Include="Views\Home\myComments.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\DefaultPage.cshtml" />
+    <Content Include="Views\Home\Invoice.cshtml" />
+    <Content Include="Views\Admin\OfferManagement.cshtml" />
+    <Content Include="Views\Admin\Enrollmentmanagment.cshtml" />
+    <Content Include="Views\Admin\CheckOffers.cshtml" />
+    <Content Include="Views\Home\verifyAdminEmail.cshtml" />
+    <Content Include="Views\Home\InstrutorDetails.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55707</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44341/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewBag.Title = "CategoryWiseCourse";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .explorecoursemenu {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+    .total-courses{
+        top:50%;
+        right:0;
+    }
+    .itemCount.hide {
+        display: none !important;
+    }
+    .itemCount.show {
+        display: block !important;
+        animation:show 1s;
+    }
+
+</style>
+
+<section class="course-content">
+    <div class="container-fluid">
+        <div class="header-two-title text-center" data-aos="fade-up">
+            <p class="tagline">Course Category</p>
+            <h2>Our Latest Course Category</h2>
+            <div class="header-two-text text-center aos" data-aos="fade-up">
+                <p> Dive into our Vast Library of online Books and Engaging Video Content! Shop Smarter, Study Harder: Explore Our Online Study Platform!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="filter-clear">
+                    <div class="card post-widget ">
+                        <div class="card-body">
+                            <div class="latest-head">
+                                <a href="/home/categoryWiseCourse" class="btn border-3 border fw-bold btn-outline-primary rounded p-2 w-100 mb-3">Explore All Courses</a>
+
+                                <h4 class="card-title mb-4">Latest Course Category</h4>
+                            </div>
+                            <ul class="latest-posts">
+                                @if (Model != null)
+                                {
+                                    if (Model.Tables[0].Rows.Count > 0)
+                                    {
+                                        foreach (System.Data.DataRow dt in Model.Tables[0].Rows)
+                                        {
+                                            <li class="py-1 position-relative">
+                                                <div class="post-thumb">
+                                                    <a href="/home/categoryWiseCourse?catId=@dt["id"]">
+                                                        <img class="img-fluid" src="~/Content/categoryPic/@dt["cpic"]">
+                                                    </a>
+                                                </div>
+                                                <div class="post-info free-color">
+                                                    <h4>
+                                                        <a href="/home/categoryWiseCourse?catId=@dt["id"]">@dt["cname"]</a>
+                                                    </h4>
+                                                    <p>Free / Paid</p>
+                                                    <div class="text-secondary position-absolute total-courses">@dt["totalCourse"] Courses</div>
+
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row" id="productItems">
+                    @if (Model != null)
+                    {
+                        if (Model.Tables[0].Rows.Count > 0)
+                        {
+                            foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+                            {
+                                <div class="col-lg-4 col-md-6 d-flex itemCount">
+                                    <div class="course-box course-design d-flex" >
+                                        <div class="product">
+                                            <div class="product-img">
+                                                <a href="/home/courseDetail?course_id=@dt[0]">
+                                                    <img style="max-height:250px;min-height:100px;" height="180" class="" src="~/Content/coursePic/@dt["thumbnail"]">
+                                                </a>
+                                                <div class="price">
+                                                    <h3 class="free-color">Rs @dt["fees"]</h3>
+                                                </div>
+                                            </div>
+                                            <div class="product-content">
+                                                <div class="course-group d-flex">
+                                                    <div class="course-group-img d-flex">
+                                                     
+                                                        <div class="course-name">
+                                                            <h4><a href="/home/courseDetail?course_id=@dt[0]">@dt["name"] <small class="text-secondary">(@dt["cname"])</small></a></h4>
+                                                            <p>@dt["title"]</p>
+                                                        </div>
+                                                    </div>
+                                                
+                                                </div>
+                                                <h6 class="title"><a href="/home/courseDetail?course_id=@dt[0]" class="course-detail">@Html.Raw(dt["details"])</a></h6>
+                                                <div class="course-info mb-0 border-bottom-0 d-flex align-items-center">
+                                                    <div class="rating-img d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/icon/icon-01.svg" >
+                                                        <p>@dt["totalCourse"] Lesson</p>
+                                                    </div>
+                                                    <div class="course-view d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/icon/icon-02.svg">
+                                                        <p>
+                                                            @{TimeSpan time = TimeSpan.FromMinutes(Convert.ToDouble(dt["totalduration"]));
+                                                                string hour = time.ToString(@"hh\:mm");
+                                                                @hour
+
+                                                                                                                }
+                                                                                                            </p>
+                                                    </div>
+                                                </div>
+                                                
+                                                    <a href="/home/invoice?course_id=@dt[0]" class="btn py-2 btn-enroll w-100">Enroll Now</a>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 d-flex flex-column justify-content-center align-items-end">
+                        <ul class="pagination lms-page">
+                            <li class="page-item prev">
+                                <button class="page-link" id="prev"><i class="fas fa-angle-left"></i></button>
+                            </li>
+                            <li class="page-item d-flex align-items-center">
+                                <a class="text-secondary text-start"> Page <span id="pageCount"></span></a>
+
+                            </li>
+                            <li class="page-item next mx-3">
+                                <button class="page-link" id="next"><i class="fas fa-angle-right"></i></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    //slice text. max text size is only 40 characters for course card description
+    let course = document.querySelectorAll(".course-detail")
+    let change;
+    course.forEach(function (e) {
+        change = e.innerText.slice(0, 40) + "...";
+        e.innerText = change;
+    })
+
+    //pagination
+    let item = document.querySelector("#productItems").children;
+    let prev = document.querySelector("#prev");
+    let next = document.querySelector("#next");
+    let page = document.querySelector("#pageCount");
+    let maxItem = 3;
+    let index = 1;
+    let pageCount = Math.ceil(item.length / maxItem);
+    console.log(pageCount)
+    prev.addEventListener("click", function () {
+        index--;
+        changePage()
+        check();
+
+    })
+    next.addEventListener("click", function () {
+        index++;
+        changePage()
+        check();
+    })
+
+    function check() {
+        if (index == pageCount) {
+            next.setAttribute("disabled", "")
+            next.style.display = "none"
+
+        } else {
+            next.removeAttribute("disabled")
+            next.style.display = "block"
+
+        }
+        if (index == 1) {
+            prev.setAttribute("disabled", "");
+            prev.style.display = "none"
+
+        } else {
+            prev.removeAttribute("disabled");
+            prev.style.display = "block"
+
+        }
+    }
+    function changePage() {
+       
+        for (i = 0; i < item.length; i++) {
+            item[i].classList.remove("show");
+            item[i].classList.add("hide")
+            if (i >= (index * maxItem) - maxItem && i < index * maxItem) {
+                item[i].classList.remove("hide")
+                item[i].classList.add("show");
+            }
+        }
+        page.innerHTML = index + " / " + pageCount;
+    }
+    changePage()
+
+    window.onload = check();
+</script>

@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .dashmenu a {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<div class="row p-2">
+
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/categorymanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius align-items-center aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/igljtrxq.json"
+                                       trigger="loop"
+                                       colors="primary:#7166ee,secondary:#eeca66"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalcategory"]</h4>
+                            <p>Total Category</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/coursemanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/bhmovrlt.json"
+                                       trigger="loop"
+                                       colors="primary:#0a5c15,secondary:#a866ee"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalcourse"]</h4>
+                            <p>Total Course</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/instructormanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/vxnfmfuw.json"
+                                       trigger="loop"
+                                       colors="primary:#e8b730,secondary:#f49cc8"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalinstructor"]</h4>
+                            <p>Total Instructor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/videomanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/uluaakho.json"
+                                       trigger="loop"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalVideo"]</h4>
+                            <p>Total Video</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/enrollmentmanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/ipbtscff.json"
+                                       trigger="loop"
+                                       colors="primary:#7166ee,secondary:#a5e830"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalenroll"]</h4>
+                            <p>Total Enrollment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/registermanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/hojnqwxj.json"
+                                       trigger="loop"
+                                       colors="primary:#e83a30,secondary:#e8308c"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalregisteration"]</h4>
+                            <p>Total Registeration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/feedbackmanagement">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/amjaykqd.json"
+                                       trigger="loop"
+                                       colors="primary:#545454,secondary:#30e8bd"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totalcoursefeedback"]</h4>
+                            <p>Total CourseFeedback</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+    <div class="col-lg-3 col-md-6 mt-3">
+        <a href="/admin/checkoffers">
+            <div class="course-full-width">
+                <div class="blur-border course-radius aos" data-aos="fade-up">
+                    <div class="online-course d-flex align-items-center">
+                        <div class="course-img">
+                            <lord-icon src="https://cdn.lordicon.com/mlxonlmo.json"
+                                       trigger="loop"
+                                       colors="primary:#109173,secondary:#cb5eee"
+                                       style="width:80px;height:80px">
+                            </lord-icon>
+                        </div>
+                        <div class="course-inner-content">
+                            <h4>@Model["totaloffers"]</h4>
+                            <p>Total Offers</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+    </div>
+</div>
+
+<div class="w-100 d-flex justify-content-center my-5" style="height:500px;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+
+<script>
+
+    //fetch data from enroll table for graph
+    let jan = 0;
+    let feb = 0;
+    let march = 0;
+    let april = 0;
+    let may = 0;
+    let june = 0;
+    let july = 0;
+    let aug = 0;
+    let sep = 0;
+    let oct = 0;
+    let nov = 0;
+    let dec = 0;
+
+        $.ajax({
+            url: "/admin/DashboardGraph",
+            type: "post",
+            success: function (res) {
+            
+                res.forEach(function (e) {
+                    if (e.month == 1) jan = dec < e.monthsRecords ? (e.monthsRecords - dec) / (e.monthsRecords) * 100 : (e.monthsRecords - dec) / (e.monthsRecords)
+                    else if (e.month == 2) feb = jan < e.monthsRecords ? (e.monthsRecords - jan) / (e.monthsRecords) * 100 : (e.monthsRecords - jan) / (e.monthsRecords)
+                    else if (e.month == 3) march = feb < e.monthsRecords ? (e.monthsRecords - feb) / (e.monthsRecords) * 100 : (e.monthsRecords - feb) / (e.monthsRecords) 
+                    else if (e.month == 4) april = march < e.monthsRecords ? (e.monthsRecords - march) / (e.monthsRecords) * 100 : (e.monthsRecords - march) / (e.monthsRecords)
+                    else if (e.month == 5) may = april < e.monthsRecords ? (e.monthsRecords - april) / (e.monthsRecords) * 100 : (e.monthsRecords - april) / (e.monthsRecords)
+                    else if (e.month == 6) june = may < e.monthsRecords ? (e.monthsRecords - may) / (e.monthsRecords) * 100 : (e.monthsRecords - may) / (e.monthsRecords)
+                    else if (e.month == 7) july = june < e.monthsRecords ? (e.monthsRecords - june) / (e.monthsRecords) * 100 : (e.monthsRecords - june) / (e.monthsRecords)
+                    else if (e.month == 8) aug = july < e.monthsRecords ? (e.monthsRecords - july) / (e.monthsRecords) * 100 : (e.monthsRecords - july) / (e.monthsRecords)
+                    else if (e.month == 9) sep = aug < e.monthsRecords ? (e.monthsRecords - aug) / (e.monthsRecords) * 100 : (e.monthsRecords - aug) / (e.monthsRecords)
+                    else if (e.month == 10) oct = sep < e.monthsRecords ? (e.monthsRecords - sep) / (e.monthsRecords) * 100 : (e.monthsRecords - sep) / (e.monthsRecords)
+                    else if (e.month == 11) nov = oct < e.monthsRecords ? (e.monthsRecords - oct) / (e.monthsRecords) * 100 : (e.monthsRecords - oct) / (e.monthsRecords)
+                    else if (e.month == 12) dec = nov < e.monthsRecords?(e.monthsRecords - nov) / (e.monthsRecords) * 100: (e.monthsRecords - nov) / (e.monthsRecords)
+
+
+                })
+                graph();
+            },
+            error: function () {
+                alert("Error Occured")
+            }
+        })
+
+    function graph() {
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Enrolled Students Data',
+                    data: [jan, feb, march, april, may, june, july, aug, sep, oct, nov, dec],
+                    fill: {
+                        target: 'origin',
+                        above: 'rgb(255, 0, 0,0.5)',   // Area will be red above the origin
+                        below: 'rgba(135, 206, 235, 0.5)'    // And blue below the origin
+                    },
+                    borderWidth: 2,
+                    backgroundColor: [
+
+    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+            }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            },
+           
+        });
+    }
+</script>

@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "InstructorManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@model System.Data.DataTable
+
+<style>
+    .mnginstmenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@*-------------------Modal for update data--------------------------------------------*@
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Instructor</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formData" enctype="multipart/form-data" method="post" action="/admin/updateInstructor">
+                    <input type="number" hidden id="id" name="id" />
+                    <input type="text" hidden id="oldPic" name="oldpic" />
+                    <div class="add-course-form mt-2">
+                        <div class="form-group">
+                            <label class="add-course-label">Name</label>
+                            <input name="name" id="name" type="text" class="form-control" placeholder="Enter Teacher Name">
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Email</label>
+                            <input name="email" id="email" type="email" class="form-control" placeholder="Enter Email Id">
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Mobile Number</label>
+                            <input name="mobno" id="mobno" type="number" class="form-control" placeholder="Enter Mobile Number">
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Gender:</label>
+                            <input class="ms-3 gen" required name="gender" value="male" type="radio" />Male
+                            <input class="ms-3 gen" required name="gender" value="female" type="radio" />Female
+                            <input class="ms-3 gen" required name="gender" value="other" type="radio" />Other
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Profile Picture</label>
+                            <input name="profilePic" id="profilePic" type="file" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Profile Summery</label>
+                            <textarea name="summary" id="summary" class="form-control" placeholder="Enter Your Profile Summery"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">About Me</label>
+                            <textarea class="form-control" id="about" name="about" placeholder="Apne Baare me Kuchh Likjiye"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="add-course-label">Your Highest Qualification</label>
+                            <input name="qualification" id="qualification" type="text" class="form-control" placeholder="Enter Your Qualification">
+                        </div>
+
+
+                    </div>
+                    <input type="submit" value="Save Changes" class="btn btn-primary">
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Instructors </b> &nbsp;&nbsp;<span class="border rounded shadow-sm py-2 px-3 text-danger fw-bold">@Model.Rows.Count</span></p>
+        <table class="table table-bordered mt-1" id="myTable">
+            <thead class="table-primary">
+                <tr>
+                    <td>Sr</td>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobno</th>
+                    <th>Gender</th>
+                    <th>Summary</th>
+                    <th>About</th>
+                    <th>Qualification</th>
+                    <th>ProfilePic</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbl_body">
+                @{int i = 0;
+                    foreach (System.Data.DataRow dt in Model.Rows)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td id="name_@dt[0]">@dt[1]</td>
+                            <td id="email_@dt[0]">@dt[2]</td>
+                            <td id="mobno_@dt[0]">@dt[3]</td>
+                            <td id="gen_@dt[0]">@dt[4]</td>
+                            <td id="summary_@dt[0]">@dt[6]</td>
+                            <td id="about_@dt[0]">@dt[7]</td>
+                            <td id="qualification_@dt[0]">@dt[8]</td>
+                            <td><img id="pic_@dt[0]" src="~/Content/instructorPic/@dt[5]" height="50" /></td>
+                            <td>
+                                <a href="/admin/deleteInstructor?id=@dt[0]&pic=@dt[5] " onclick="return confirm('Do You Really Want To Delete?')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                <button class="btn btn-warning text-light" onclick="editModal(@dt[0])" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil"></i></button>
+                                @if (Convert.ToInt32(dt["status"]) == 1)
+                                {
+                                    <a href="/admin/updateinstructor?status=@dt[0]" title="Active Category" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/admin/updateInstructor?status=@dt[0]" title="Deactive Category" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                                }
+                            </td>
+
+                        </tr>
+                    }
+
+
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h2 class="text-center my-5 text-secondary">Please Add Instructors......</h2>
+    }
+}
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    //get Data and set in Modal for update instructor
+    function editModal(e) {
+        var name = $("#name_" + e).text()
+        var email = $("#email_" + e).text()
+        var mobno = $("#mobno_" + e).text()
+        var gen = $("#gen_" + e).text()
+        var summary = $("#summary_" + e).text()
+        var about = $("#about_" + e).text()
+        var qualification = $("#qualification_" + e).text()
+        var pic = $("#pic_" + e).attr("src")
+        var rpic = pic.slice(pic.lastIndexOf("/")); //get old src for replace with new src
+        $("#oldPic").val(rpic)
+        $("#id").val(e)
+        $("#name").val(name);
+        $("#email").val(email);
+        $("#mobno").val(mobno);
+        $("#summary").val(summary);
+        $("#about").val(about);
+        $("#qualification").val(qualification);
+        var gender = document.querySelectorAll(".gen");
+        //checcked gender om the basis of old records
+        gender.forEach(function (e) {
+            if (gen == e.value) {
+                e.setAttribute("checked", "");
+            }
+        })
+    };
+</script>

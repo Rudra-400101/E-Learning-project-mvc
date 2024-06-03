@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "VideoManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<style>
+    .mnglecturemenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Update Video</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" action="/admin/updateVideo">
+                    <input type="number" id="videoId" name="id" hidden />
+                    <div class="add-course-info card shadow">
+                        <div class="add-course-inner-header">
+
+                        </div>
+
+                        <div class="add-course-form">
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b>Course </b></label>
+                                        <select class="form-control" id="course" name="course">
+                                            <option selected disabled>--select Course--</option>
+                                            @if (Model != null)
+                                            {
+                                                foreach (System.Data.DataRow row in Model.Rows)
+                                                {
+                                                    <option class="course_Id" value="@row["courseId"]">@row["courseName"]</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b>Chapter</b></label>
+                                        <input class="form-control" autocomplete="off" id="chapter" name="chapter" list="chapterList" placeholder="Select Chapter" />
+                                        <datalist id="chapterList">
+                                        </datalist>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b>Video Title</b></label>
+                                        <input type="text" class="form-control" name="name" id="name" placeholder="course name">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b> Video Link</b></label>
+                                        <input type="text" class="form-control" name="video" id="video" placeholder="https://www.youtube.com/watch?v=g7MA9d5Dy7o">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b>Paid | Free</b></label>
+                                        <select name="ispaid" class="form-control">
+                                            <option class="ispaid" value="1">Paid</option>
+                                            <option class="ispaid" value="0">Free</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="add-course-label"><b>Video Duration</b></label>
+                                        <input type="text" name="duration" id="duration" placeholder="In Minutes" class="form-control float" />
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="add-course-label"><b>Video Detail</b></label>
+                                    <textarea style="resize:none;" class="form-control" name="description" id="details" placeholder="Enter Content"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="widget-btn ">
+                            <input type="reset" class="btn btn-dark" value="reset" />
+                            <input type="submit" value="Update" class="btn btn-info-light next_btn ms-5" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Videos </b> &nbsp;&nbsp;<span class="border rounded shadow-sm py-2 px-3 text-danger fw-bold">@Model.Rows.Count</span></p>
+        <table class="table table-bordered" id="myTable">
+            <thead>
+                <tr>
+                    <th>Sr</th>
+                    <th>Title</th>
+                    <th>Video</th>
+                    <th>Details</th>
+                    <th>Course</th>
+                    <th>Duration</th>
+                    <th>Chapter</th>
+                    <th>IsPaid</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int i = 0;
+                    foreach (System.Data.DataRow dt in Model.Rows)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td id="title_@i">@dt["title"]</td>
+                            <td><iframe height="100" width="120" id="link_@i" src="@dt["link"]" allowfullscreen></iframe></td>
+                            <td id="details_@i">@Html.Raw(dt["details"])</td>
+                            <td id="course_@i">@dt["courseName"]</td>
+                            <td id="duration_@i">
+                                @{TimeSpan time = TimeSpan.FromMinutes(Convert.ToDouble(dt["duration"]));
+                                    string hour = time.ToString(@"hh\:mm");
+                                    @hour
+
+                                } min
+                            </td>
+                            <td id="chapter_@i">@dt["chapter"]</td>
+                            <td id="ispaid_@i">@dt["ispaid"]</td>
+                            <td>
+                                <a class="btn btn-danger" onclick="return confirm('Do You Really Want To Delete?')" href="/admin/deleteVideo?id=@dt["id"]"><i class="fa-solid fa-trash"></i></a>
+                                <a class="btn btn-warning" onclick="setVideoDetail(@i,@dt["courseId"],@dt["id"],@dt["duration"])" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil"></i></a>
+                                @if (Convert.ToInt32(dt["status"]) == 1)
+                                {
+                                    <a href="/admin/VideoManagement?status=@dt[0]" title="Active Video" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="/admin/VideoManagement?status=@dt[0]" title="Deactive Video" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+}
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script src="~/Content/ckeditor.js"></script>
+<script>
+
+    let editor; //for hold ckeditor
+    //create ck editor for textarea
+    ClassicEditor
+        .create(document.querySelector('#details'))
+        .then(newEditor => {
+            editor = newEditor; //hold ckeditor on editor variable
+        })
+        .catch(error => {
+            console.error(error);
+        });
+
+        //get video datails and set it on modal for edit video data
+
+    const setVideoDetail = (e, id, vid, duration) => {
+        let title = $("#title_" + e).text();
+        let details = $("#details_" + e).text();
+        let link = $("#link_" + e).attr("src");
+        let chapter = $("#chapter_" + e).text();
+        let ispaid = $("#ispaid_" + e).text();
+        let bool = ispaid == "True" ? 1 : 0;
+        $("#chapter").val(chapter)
+        $("#name").val(title)
+        $("#video").val(link)
+        $("#duration").val(duration);
+        $("#videoId").val(vid);
+        editor.setData(details)
+
+        let courseList = document.querySelectorAll(".course_Id");
+        let isPaidList = document.querySelectorAll(".ispaid");
+        courseList.forEach(function (e) {
+            if (e.value == id) {
+                e.setAttribute("selected", "")
+            }
+        });
+
+        isPaidList.forEach(function (e) {
+            if (e.value == bool) {
+                e.setAttribute("selected", "")
+            }
+        });
+    }
+</script>
+
+

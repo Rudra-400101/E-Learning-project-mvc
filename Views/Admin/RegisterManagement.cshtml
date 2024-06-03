@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "RegisterManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@model System.Data.DataTable
+
+
+<style>
+    .mngregistermenu a, .management {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+
+
+        <div class="row mt-3">
+
+            <div class="text-secondary text-center">
+                <p class="mt-2 float-start"><b>Total Registrations </b> &nbsp;&nbsp;<span class="border shadow-sm py-2 px-3 text-danger fw-bold">@Model.Rows.Count</span></p>
+                <span class="fs-3  fw-bold">Registeration</span> <span class="text-info fs-3  fw-bold">Management</span>
+            </div>
+            <div class="col-sm-12 p-3 mx-auto border shadow overflow-auto">
+              
+                <table class="table table-striped table-bordered table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Sr</th>
+                            <th>Name</th>
+                            <th>email</th>
+                            <th>Password</th>
+                            <th>Course</th>
+                            <th>Mobile Number</th>
+                            <th>College</th>
+                            <th>Year</th>
+                            <th>Picture</th>
+                            <th>Gender</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null)
+                            {
+                                int sr = 0;
+                                foreach (System.Data.DataRow i in Model.Rows)
+                                {
+                                    sr++;
+                                    <tr>
+                                        <td>@sr</td>
+                                        <td>@i["name"]</td>
+                                        <td>@i["email"]</td>
+                                        <td>@i["password"]</td>
+                                        <td>@i["course"]</td>
+                                        <td>@i["mobno"]</td>
+                                        <td>@i["college"]</td>
+                                        <td>@i["year"]</td>
+                                        <td><img src="~/Content/RegisterPic/@i["pic"]" height='50' /></td>
+                                        <td>@i["gender"]</td>
+                                        <td>
+                                            <a class="btn btn-outline-danger" onclick="return confirm('Do Your Really Want To Delete?')" href="/admin/RegisterManagement?email=@i["email"]&pic=@i["pic"]"><i class="fa-solid fa-trash"></i></a>
+                                            @if (Convert.ToInt32(i["status"]) == 1)
+                                            {
+                                                <a href="/admin/RegisterManagement?status=@i["email"]" title="Active Video" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/admin/RegisterManagement?status=@i["email"]" title="Deactive Video" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2 class="text-center text-secondary">Records Are Empty...</h2>
+    }
+}
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>

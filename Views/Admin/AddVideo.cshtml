@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "AddVideo";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    #table {
+        display: none;
+    }
+    .addlecturemenu a, .addDetail {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+
+</style>
+
+<script src="~/content/ckeditor.js"></script>
+<div class="card-header text-center fw-bold fs-3"> <h2><span class="text-info">Add Video </span><span class="text-primary">Lecture</span></h2></div>
+<section class="page-content course-sec">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+
+                <div class="widget-set">
+
+                    <div class="widget-content multistep-form">
+                        <fieldset id="first">
+                            <form method="post" enctype="multipart/form-data">
+                                <div class="add-course-info card shadow">
+                                    <div class="add-course-inner-header">
+
+                                    </div>
+
+                                    <div class="add-course-form">
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Course </b></label>
+                                                    <select class="form-control" id="course" name="course">
+                                                        <option selected disabled>--select Course--</option>
+                                                        @if (Model != null)
+                                                        {
+                                                            foreach (System.Data.DataRow row in Model.Rows)
+                                                            {
+                                                                <option value="@row[0]"> @row[1]</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Chapter</b></label>
+                                                    <input class="form-control" autocomplete="off" name="chapter" list="chapterList" placeholder="Select Chapter"/>
+                                                    <datalist id="chapterList">
+                                                     
+                                                      
+                                                    </datalist>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Video Title</b></label>
+                                                    <input type="text" class="form-control" name="name" id="name" placeholder="course name">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b> Video Link</b></label>
+                                                    <input type="text" class="form-control" name="video" id="video" placeholder="https://www.youtube.com/watch?v=g7MA9d5Dy7o">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Paid | Free</b></label>
+                                                    <select name="ispaid" class="form-control">
+                                                        <option value="1">Paid</option>
+                                                        <option value="0">Free</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="add-course-label"><b>Video Duration</b></label>
+                                                    <input type="text" name="duration" placeholder="In Minutes" class="form-control float" />
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="add-course-label"><b>Video Detail</b></label>
+                                                <textarea style="resize:none;" class="form-control" name="description" id="detail" placeholder="Enter Content"></textarea>
+                                                <script>ClassicEditor.create(document.querySelector("#detail"))</script>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="widget-btn ">
+                                        <input type="reset" class="btn btn-dark" value="reset" />
+                                        <input type="submit" value="Add" class="btn btn-info-light next_btn ms-5" />
+                                    </div>
+                                </div>
+                            </form>
+                        </fieldset>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<table class="table table-bordered w-75 mx-auto" id="table">
+    <thead class="">
+        <tr>
+            <th>Sr</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Video</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Chapter</th>
+            <th>IsPaid</th>
+        </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+
+
+<script>
+    //selct Video according to category data while selectin category
+    document.getElementById("course").addEventListener("change", function () {
+        let data = this.value;
+        $.ajax({
+            url: "/admin/selectVideo",
+            type: "post",
+            data: { category: data },
+            success: function (res) {
+                if (res.length > 0) {
+                    document.getElementById("table").style.display = "block";
+                    $("#chapterList").empty()
+                    var chapter = [];
+
+                    res.forEach(function (e) {
+                        if (!chapter.includes(e.chapter)) {
+                            chapter.push(e.chapter)
+                        }
+                    })
+                    chapter.forEach(function (e) {
+                        $("#chapterList").append(
+                            `<option>${e}</option>`
+                        )
+                    })
+                } else {
+                    document.getElementById("table").style.display = "none";
+                    $("#chapterList").empty()
+
+                }
+                //append Data in body
+                $("#tbody").empty();
+                res.forEach(function (e, i) {
+                    $("#tbody").append(
+                        `
+                        <tr>
+                        <td>${i+1}</td>
+                        <td>${e.name}</td>
+                        <td>${e.coursetitle}</td>
+                        <td><iframe src="${e.video}" allowfullscreen encrypted-media></iframe></td>
+                        <td>${e.duration}</td>
+                        <td>${e.description}</td>
+                        <td>${e.chapter}</td>
+                        <td>${e.ispaid}</td>
+                        </tr>
+                        `
+                    )
+                })
+            },
+            error: function () {
+                alert("Error While Selecting Video Data");
+            }
+        })
+    })
+</script>
+

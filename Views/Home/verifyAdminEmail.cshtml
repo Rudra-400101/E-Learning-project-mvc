@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "verifyAdminEmail";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    form {
+        min-width: 300px;
+    }
+
+    #showOrHideSuccessAlert {
+        display: none;
+        z-index: 10;
+    }
+</style>
+
+@*show alert*@
+<div class="alert alert-success alert-dismissible fw-bold top-0 w-100 p-3 position-fixed" id="showOrHideSuccessAlert" role="alert">
+    <i class="fa-solid fa-circle-check fs-3"></i> <span id="successAlert" class="fs-5"></span>
+</div>
+<form class="w-25 border rounded shadow p-3 mx-auto mt-5" id="formData">
+    <h5 class="text-secondary text-center">Verify Your Email <span class="text-primary"> Here..</span></h5>
+    <input type="email" name="email" id="email" placeholder="Enter Your Email..." class="form-control my-3" />
+    <input type="button" value="Verify Email" onclick="verifyEmail()" class="btn btn-primary" />
+</form>
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    //verify email for admin to change their password
+    function verifyEmail() {
+        if ($("#email").val() != "") {
+            let email = $("#email").val();
+            $.ajax({
+                url: "/home/verifyAdminEmail",
+                type: "post",
+                data: { email: email },
+                success: function (res) {
+                    if (res == "Email Matched") {
+                        document.getElementById("formData").reset();
+                        //show success alert
+                        document.getElementById("showOrHideSuccessAlert").style.display = "block";
+                        $("#successAlert").text(res);
+                        setTimeout(() => {
+                            document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                            location.href = "/home/verifyOtp"
+                        }, 2000)
+                    }
+                    else {
+                        //show not matched alert
+                        document.getElementById("formData").reset();
+                        document.getElementById("showOrHideSuccessAlert").style.display = "block";
+                        $("#showOrHideSuccessAlert").html('<i class="fa-solid fs-3 fa-circle-exclamation"></i> ' + "&nbsp;" + res);
+                        $("#showOrHideSuccessAlert").addClass("alert-danger")
+                        setTimeout(() => {
+                            document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                            $("#showOrHideSuccessAlert").removeClass("alert-danger")
+                        }, 2000)
+                    }
+                },
+                error: function () {
+                    alert("Error Occured")
+                }
+            })
+        } else {
+            //show all fields are alerts
+            document.getElementById("showOrHideSuccessAlert").style.display = "block";
+            $("#showOrHideSuccessAlert").html('<i class="fa-solid fs-3 fa-circle-exclamation"></i> ' + "&nbsp; All Fields Are Required");
+            $("#showOrHideSuccessAlert").addClass("alert-danger")
+            setTimeout(() => {
+                document.getElementById("showOrHideSuccessAlert").style.display = "none";
+                $("#showOrHideSuccessAlert").removeClass("alert-danger")
+            }, 2000)
+        }
+
+    }
+</script>
+
+
+
+

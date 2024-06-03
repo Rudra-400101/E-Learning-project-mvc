@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "myComments";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .courseName {
+        top: 1%;
+        right: 2%;
+    }
+
+    .latest-blog-sec {
+        display: none;
+    }
+    .mycommentmenu a, .profile {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<h3 class="text-center text-secondary mt-5">Your All Comments Here!!</h3>
+<div class="d-flex justify-content-center flex-wrap my-5 gap-4 p-3">
+    @{if (Model != null)
+        {
+            if (Model.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow dt in Model.Rows)
+                {<div class="shadow p-4 rounded w-25 position-relative" style="min-width:250px;">
+                        <p class="rev-info">
+                            <h4>@dt["fullname"]</h4>
+                            <b>@dt["subject"]</b>
+                        <p>@dt["comment"]</p>
+                        </p>
+                        <p class="position-absolute courseName"><a href="/home/courseDetail?course_id=@dt["courseId"]" class="text-decoration-underline">@dt["title"]</a> &nbsp; <a href="/home/myComments?id=@dt["id"]"><i class="fa-solid fa-trash text-danger "></i></a></p>
+                    </div>
+
+                }
+            }
+            else
+            {
+                <h5 class="text-center text-secondary">Not Comment Yet..</h5>
+            }
+        }
+    }
+</div>

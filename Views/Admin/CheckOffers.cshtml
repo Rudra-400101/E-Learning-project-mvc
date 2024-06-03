@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "CheckOffers";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .checkoffermenu a, .enrollment {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+@if (Model != null)
+{
+    if (Model.Rows.Count > 0)
+    {
+        <p class="mt-2 text-secondary"><b>Total Offers </b> &nbsp;&nbsp;<span class="border shadow-sm py-2 px-3 text-danger fw-bold rounded">@Model.Rows.Count</span></p>
+        int i = 0;
+        <table class="table table-bordered" id="myTable">
+            <thead>
+                <tr>
+                    <th>Sr</th>
+                    <th>Course</th>
+                    <th>Eamil</th>
+                    <th>Discount Amount</th>
+                    <th>Old Expiry</th>
+                    <th>New Expiry</th>
+                    <th>Final Fee</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow dt in Model.Rows)
+                {
+                    i++;
+                    <tr>
+                        <td>@i</td>
+                        <td>@dt["title"]</td>
+                        <td>@dt["email"]</td>
+                        <td>@dt["discountAmount"]</td>
+                        <td>@dt["oldExpiry"]</td>
+                        <td>@dt["newExpiry"]</td>
+                        <td>@dt["finalfee"]</td>
+                        <td>
+                            <a href="/admin/checkOffers?id=@dt["id"]" onclick="return confirm('Do You Really Want To Delete?')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            @if (Convert.ToInt32(dt["offerstatus"]) == 1)
+                            {
+                                <a href="/admin/checkOffers?status=@dt["id"]" title="Active Category" class="btn btn-success"><i class="fa-solid fa-power-off"></i></a>
+                            }
+                            else
+                            {
+                                <a href="/admin/checkOffers?status=@dt["id"]" title="Deactive Category" class="btn btn-danger"><i class="fa-solid fa-power-off"></i></a>
+
+                            }
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3 class="text-center text-secondary">Offfers Are Not Added Yet..!</h3>
+    }
+}
+
+<script src="~/Content/assets/js/jquery-3.6.0.min.js"></script>

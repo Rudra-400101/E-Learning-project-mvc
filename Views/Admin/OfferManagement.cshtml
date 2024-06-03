@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "OfferManagement";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .offermanagemenu a, .enrollment {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+    body{
+        background:url("/Content/assets/img/login-bg.png");
+    }
+</style>
+
+<div class="row my-5">
+    <div class="col-sm-5 mx-auto shadow-lg p-5 rounded-3">
+        <form method="post" action="/admin/AddOffer">
+            <h3 class="text-center mb-5">OFFER <span class="text-danger">Management...</span></h3>
+            <label class="w-100">
+                <b> Enter UserID</b>
+                <input type="email" id="userEmail" required class="form-control" placeholder="Enter UserId Or Mobile Number" />
+            </label>
+            <input type="text" name="email" id="email" hidden />
+            <span id="useralertData"></span>
+            <label class="w-100 mt-2">
+                <b>Courses</b>
+                <select name="course" id="course" class="form-select" required>
+                    <option>--Select Course---</option>
+                    @foreach (System.Data.DataRow dt in Model.Rows)
+                    {
+                        <option value="@dt["courseId"]">@dt["title"]</option>
+                    }
+                </select>
+            </label>
+            <label class="w-100">
+                <b>Total Fee</b>
+                <input type="number" name="totalfee" readonly id="totalfee" class="form-control" />
+            </label>
+            <label class="w-100">
+                <b>Expiry Date</b>
+                <input type="date" name="oldexpDate" readonly id="expDate" class="form-control" />
+            </label>
+            <label class="w-100">
+                <b>Discount Amount</b>
+                <input type="number" name="discountAmount" required placeholder="Please Enter Discount Amount" id="damount" class="form-control" />
+            </label>
+            <label class="w-100">
+                <b>Confirm Expiry Date</b>
+                <input type="date" required name="cexpDate" id="cexpDate" class="form-control" />
+            </label>
+            <input type="submit" id="btn" disabled value="Add Now" class="btn btn-primary"/>
+        </form>
+    </div>
+</div>
+
+<script src="~/content/assets/js/jquery-3.6.0.min.js"></script>
+<script>
+    //match user on blur event and set in a span tag for provide offers
+    $("#userEmail").blur(function () {
+        $.ajax({
+            url: "/admin/matchUser",
+            type: "get",
+            data: { "userid": $("#userEmail").val() },
+            success: function (res) {
+                if (res.length > 0) {
+                    document.getElementById("btn").removeAttribute("disabled")
+                    res.forEach(function (e) {
+                        $("#email").val(e.email)
+                        $("#useralertData").html(`
+ <b> Name:</b> ${e.name}<br>
+  <b>Email:</b> ${e.email}<br>
+  <b>Contact:</b> ${e.mob}<br>
+  <b>Gender:</b> ${e.gender}<br>
+  <b>College:</b> ${e.college}
+  `);
+                    });
+                } else {
+                    $("#useralertData").html("<span class='text-danger'>Email or Mobile Number Does Not Match. User is Invalid</span>");
+                    document.getElementById("btn").setAttribute("disabled","")
+
+                }
+            },
+            error: function () {
+                $("#useralertData").html("Error While Fetch User Data");
+            }
+        })
+    })
+
+    //select Course for provide offers on selected course
+    document.getElementById("course").addEventListener("change",function () {
+        let data = this.value;
+        $.ajax({
+            url: "/admin/selectCourseWiseData",
+            type: "get",
+            data: { course: data },
+            success: function (res) {
+                res.forEach(function (e) {
+                    $("#totalfee").val(e.cfees);
+                    $("#expDate").val(e.duration);
+                    document.getElementById("cexpDate").min = e.duration
+                }); 
+            },
+            error: function () {
+
+            }
+        })
+    })
+</script>
+

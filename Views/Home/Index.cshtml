@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/GeneralLayout.cshtml";
+}
+
+<style>
+    .homemenu {
+        color: #F66962 !important;
+        text-shadow: 1px 1px 2px black;
+    }
+</style>
+
+<section class="home-two-slide d-flex align-items-center">
+    @*<a href="~/Content/csv/@Session["fname"]" download="@Session["fname"]">downolad</a>*@
+<div class="container">
+<div class="row ">
+<div class="col-lg-8 col-12" data-aos="fade-up">
+<div class="home-slide-face">
+<div class="home-slide-text ">
+<h5>The Leader in Online Learning</h5>
+<h1>Engaging & Accessible Online Courses For All</h1>
+</div>
+<div class="trust-user-two">
+<p>Trusted by over 15K Users worldwide since 2022</p>
+<div class="rating-two">
+<span>4.4</span>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+<i class="fas fa-star filled"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="shapes">
+<img class="shapes-one" src="~/Content/assets/img/bg/home-right.png" alt>
+<img class="shapes-two" src="~/Content/assets/img/bg/home-right-bottom.png" alt>
+<img class="shapes-middle" src="~/Content/assets/img/bg/home-middle.png" alt>
+<img class="shapes-four wow animate__animated animate__slideInLeft" src="~/Content/assets/img/bg/home-left.png" alt>
+</div>
+
+</div>
+</section>
+
+<section class="topcategory-sec">
+<div class="container">
+<div class="header-two-title text-center" data-aos="fade-up">
+<p class="tagline">Favourite Course</p>
+<h2>Top Category</h2>
+<div class="header-two-text">
+    <p class="mb-0">Get certified, master modern tech skills, and level up your career — whether you’re starting out or a seasoned pro. 95% of eLearning learners report our hands-on content directly helped their careers.</p>
+</div>
+</div>
+<div class="top-category-group">
+    <div class="row">
+        @if (Model != null)
+        {
+            foreach (System.Data.DataRow row in Model.Tables[0].Rows)
+            {
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12 d-flex" data-aos="fade-down">
+                    <div class="categories-item flex-fill">
+                        <div class="categories-icon">
+                            <img src="~/Content/categoryPic/@row["cpic"]">
+                        </div>
+                        <div class="categories-content">
+                            <h3><a href="/home/categoryWiseCourse?catId=@row[0]">@row["cname"]</a></h3>
+                        </div>
+                        <p class="text-secondary">@row["totalCourse"] Courses</p>
+                    </div>
+                </div>
+                
+            }
+        }
+            </div>
+           
+</div>
+
+<div class="col-lg-12">
+<div class="more-details text-center" data-aos="fade-down">
+<a href="/home/categoryWiseCourse" class="discover-btn">View all Category <i class="fas fa-arrow-right ms-2"></i></a>
+</div>
+</div>
+
+</div>
+</section>
+
+
+<section class="featured-courses-sec">
+<div class="patter-one-main">
+<img class="patter-one" src="~/Content/assets/img/bg/patter-one.png">
+</div>
+<div class="container">
+<div class="header-two-title text-center" data-aos="fade-up">
+<p class="tagline">What’s New</p>
+<h2>Featured Courses</h2>
+<div class="header-two-text m-auto text-center d-block">
+    <p class="mb-0">Get certified, master modern tech skills, and level up your career — whether you’re starting out or a seasoned pro. </p>
+</div>
+</div>
+<div class="featured-courses-two" id="courseDiv">
+<div class="row">
+    @if (Model != null) {
+        if (Model.Tables[1].Rows.Count > 0)
+        {
+            foreach (System.Data.DataRow dt in Model.Tables[1].Rows)
+            {
+
+<div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 d-flex" data-aos="fade-down">
+<div class="featured-details-two">
+<div class="product-item-two">
+<div class="product-img-two">
+<a href="/home/courseDetail?course_id=@dt["courseId"]">
+<img class="img-fluid" style="max-height:200px;" alt="image" src="~/Content/coursePic/@dt["thumbnail"]">
+</a>
+<div class="price-text">
+<h4><span>@dt["title"]</span></h4>
+</div>
+</div>
+<div class="course-details-content">
+<div class="image-info">
+<img class="img-fluid" alt="images" src="~/Content/instructorPic/@dt["profilepic"]">
+</div>
+<div class="name-text featured-info-two">
+<h3 class="title instructor-text "><a href="/home/courseDetail?course_id=@dt["courseId"]" class="course-detail fs-6">@Html.Raw(dt["details"])</a></h3>
+<p class="me-3">By<span class="text-danger ms-2">@dt["name"]</span></p>
+</div>
+<div class="featured-info-time d-flex align-items-center">
+<div class="hours-time-two d-flex align-items-center">
+<span><i class="fa-regular fa-clock me-2"></i></span>
+<p>
+
+    @{TimeSpan time = TimeSpan.FromMinutes(Convert.ToDouble(dt["totalduration"]));
+        string hour = time.ToString(@"hh\:mm");
+        @hour
+
+    } 
+
+</p>
+</div>
+<div class="course-view d-inline-flex align-items-center">
+<div class="course-price">
+<h3>Rs.@dt["fees"] <span>@dt["discount"]</span></h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+            }
+        }
+    }
+
+</div>
+</div>
+
+<div class="col-lg-12" data-aos="fade-up">
+<div class="more-details text-center">
+<a href="/home/categoryWiseCourse" class="discover-btn">View all Courses <i class="fas fa-arrow-right ms-2"></i></a>
+</div>
+</div>
+
+</div>
+</section>
+
+<section class="testimonial-sec">
+<div class="container">
+<div class="testimonial-two-img">
+<img src="~/Content/assets/img/bg/map-user.png" alt class="img-fluid">
+</div>
+<div class="testimonial-subhead-two">
+<div class="col-xl-8 col-lg-10 col-md-10 mx-auto" data-aos="fade-down">
+<div class="testimonial-inner">
+<div class="header-two-title testimonial-head-two text-center">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<section class="real-reviews-sec" id="aboutUs">
+<div class="container">
+<div class="header-two-title text-center" data-aos="fade-up">
+<p class="tagline">About Us</p>
+<h2>Users-love-us Don't take it from us</h2>
+<div class="header-two-text text-center m-auto">
+    <p class="mb-0">Techpile Technologies is an innovative organization specialized in both Software and Hardware Development and Training.</p>
+</div>
+</div>
+<div class="real-reviews-group">
+<div class="row align-items-center">
+<div class="col-lg-6 col-md-12 col-sm-12" data-aos="fade-up">
+<div class="reviews-img">
+<img src="~/Content/assets/img/reviews-img-two.png" class="img-fluid">
+</div>
+</div>
+<div class="col-lg-6 col-md-12 col-md-12" data-aos="fade-up">
+<div class="owl-carousel real-reviews owl-theme">
+<div class="item">
+<div class="real-reviews-grid">
+    <div class="review-content">
+        <h3>Something About Us</h3>
+        <p>This Platform is founded by some young engineers who have mastered the IT sector with Objective to achieve the High Esteem Goals in the Sector across the Nation & Beyond.</p>
+        <p>Our Organization is an innovative organization specialized in both Software and Hardware Development and Training.</p>
+        <p>We has always been the best and most approved organisation for Summer & Industrial Training & Appreenticeship programs by Students of Entire region</p>
+        <p>With commitment to excellence, we strive to push the boundaries of what is possible in the digital realm by delivering high-quality software, robust hardware solutions, and comprehensive training programs that propel our clients and trainees towards unprecedented success. </p>
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+<div class="client-two-carousel">
+<div class="lead-group-slider owl-carousel owl-theme">
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-01.png">
+</div>
+</div>
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-02.png">
+</div>
+</div>
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-03.png">
+</div>
+</div>
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-04.png">
+</div>
+</div>
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-05.png">
+</div>
+</div>
+<div class="item">
+<div class="lead-img">
+<img class="img-fluid" src="~/Content/assets/img/lead-06.png">
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+<script>
+    let course = document.querySelectorAll(".course-detail")
+    let change;
+    course.forEach(function (e) {
+        change = e.innerText.slice(0, 40) + "...";
+        e.innerText = change;
+    })
+</script>
